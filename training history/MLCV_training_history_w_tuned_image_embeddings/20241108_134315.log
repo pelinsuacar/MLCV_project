@@ -1,0 +1,2800 @@
+2024/11/08 13:43:16 - mmengine - INFO - 
+------------------------------------------------------------
+System environment:
+    sys.platform: linux
+    Python: 3.8.19 (default, Mar 20 2024, 19:58:24) [GCC 11.2.0]
+    CUDA available: True
+    MUSA available: False
+    numpy_random_seed: 1971375490
+    GPU 0: NVIDIA GeForce RTX 2070 SUPER
+    GPU 1: NVIDIA GeForce GTX 1080
+    CUDA_HOME: /usr/local/cuda
+    NVCC: Cuda compilation tools, release 11.2, V11.2.142
+    GCC: gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0
+    PyTorch: 1.11.0+cu113
+    PyTorch compiling details: PyTorch built with:
+  - GCC 7.3
+  - C++ Version: 201402
+  - Intel(R) Math Kernel Library Version 2020.0.0 Product Build 20191122 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v2.5.2 (Git Hash a9302535553c73243c632ad3c4c80beec3d19a1e)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - LAPACK is enabled (usually provided by MKL)
+  - NNPACK is enabled
+  - CPU capability usage: AVX2
+  - CUDA Runtime 11.3
+  - NVCC architecture flags: -gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86
+  - CuDNN 8.2
+  - Magma 2.5.2
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.3, CUDNN_VERSION=8.2.0, CXX_COMPILER=/opt/rh/devtoolset-7/root/usr/bin/c++, CXX_FLAGS= -Wno-deprecated -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -fopenmp -DNDEBUG -DUSE_KINETO -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -DEDGE_PROFILER_USE_KINETO -O2 -fPIC -Wno-narrowing -Wall -Wextra -Werror=return-type -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-result -Wno-unused-local-typedefs -Wno-strict-overflow -Wno-strict-aliasing -Wno-error=deprecated-declarations -Wno-stringop-overflow -Wno-psabi -Wno-error=pedantic -Wno-error=redundant-decls -Wno-error=old-style-cast -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=1.11.0, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=OFF, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, 
+
+    TorchVision: 0.12.0+cu113
+    OpenCV: 4.10.0
+    MMEngine: 0.10.4
+
+Runtime environment:
+    cudnn_benchmark: True
+    mp_cfg: {'mp_start_method': 'fork', 'opencv_num_threads': 0}
+    dist_cfg: {'backend': 'nccl'}
+    seed: 1971375490
+    Distributed launcher: none
+    Distributed training: False
+    GPU number: 1
+------------------------------------------------------------
+
+2024/11/08 13:43:17 - mmengine - INFO - Config:
+_backend_args = None
+_multiscale_resize_transforms = [
+    dict(
+        transforms=[
+            dict(scale=(
+                640,
+                640,
+            ), type='YOLOv5KeepRatioResize'),
+            dict(
+                allow_scale_up=False,
+                pad_val=dict(img=114),
+                scale=(
+                    640,
+                    640,
+                ),
+                type='LetterResize'),
+        ],
+        type='Compose'),
+    dict(
+        transforms=[
+            dict(scale=(
+                320,
+                320,
+            ), type='YOLOv5KeepRatioResize'),
+            dict(
+                allow_scale_up=False,
+                pad_val=dict(img=114),
+                scale=(
+                    320,
+                    320,
+                ),
+                type='LetterResize'),
+        ],
+        type='Compose'),
+    dict(
+        transforms=[
+            dict(scale=(
+                960,
+                960,
+            ), type='YOLOv5KeepRatioResize'),
+            dict(
+                allow_scale_up=False,
+                pad_val=dict(img=114),
+                scale=(
+                    960,
+                    960,
+                ),
+                type='LetterResize'),
+        ],
+        type='Compose'),
+]
+affine_scale = 0.9
+albu_train_transforms = [
+    dict(p=0.01, type='Blur'),
+    dict(p=0.01, type='MedianBlur'),
+    dict(p=0.01, type='ToGray'),
+    dict(p=0.01, type='CLAHE'),
+]
+backend_args = None
+base_lr = 0.002
+batch_shapes_cfg = None
+close_mosaic_epochs = 30
+coco_test_dataset = dict(
+    ann_file='train_ann3.json',
+    data_prefix=dict(img='train_img'),
+    data_root='vehicle_detection_satellite_coco',
+    filter_cfg=dict(filter_empty_gt=False, min_size=32),
+    metainfo=dict(classes=(
+        'camping car',
+        'pickup',
+        'truck',
+    )),
+    pipeline=[
+        dict(backend_args=None, type='LoadImageFromFile'),
+        dict(scale=(
+            640,
+            640,
+        ), type='YOLOv5KeepRatioResize'),
+        dict(
+            allow_scale_up=False,
+            pad_val=dict(img=114),
+            scale=(
+                640,
+                640,
+            ),
+            type='LetterResize'),
+        dict(_scope_='mmdet', type='LoadAnnotations', with_bbox=True),
+        dict(
+            meta_keys=(
+                'img_id',
+                'img_path',
+                'ori_shape',
+                'img_shape',
+                'scale_factor',
+                'pad_param',
+            ),
+            type='mmdet.PackDetInputs'),
+    ],
+    type='YOLOv5CocoDataset')
+coco_train_dataset = dict(
+    ann_file='test_ann3.json',
+    data_prefix=dict(img='test_img'),
+    data_root='vehicle_detection_satellite_coco',
+    filter_cfg=dict(filter_empty_gt=False, min_size=32),
+    metainfo=dict(classes=(
+        'camping car',
+        'pickup',
+        'truck',
+    )),
+    pipeline=[
+        dict(backend_args=None, type='LoadImageFromFile'),
+        dict(type='LoadAnnotations', with_bbox=True),
+        dict(
+            img_scale=(
+                640,
+                640,
+            ),
+            pad_val=114.0,
+            pre_transform=[
+                dict(backend_args=None, type='LoadImageFromFile'),
+                dict(type='LoadAnnotations', with_bbox=True),
+            ],
+            type='Mosaic'),
+        dict(
+            border=(
+                -320,
+                -320,
+            ),
+            border_val=(
+                114,
+                114,
+                114,
+            ),
+            max_aspect_ratio=100,
+            max_rotate_degree=0.0,
+            max_shear_degree=0.0,
+            scaling_ratio_range=(
+                0.09999999999999998,
+                1.9,
+            ),
+            type='YOLOv5RandomAffine'),
+        dict(
+            pre_transform=[
+                dict(backend_args=None, type='LoadImageFromFile'),
+                dict(type='LoadAnnotations', with_bbox=True),
+                dict(
+                    img_scale=(
+                        640,
+                        640,
+                    ),
+                    pad_val=114.0,
+                    pre_transform=[
+                        dict(backend_args=None, type='LoadImageFromFile'),
+                        dict(type='LoadAnnotations', with_bbox=True),
+                    ],
+                    type='Mosaic'),
+                dict(
+                    border=(
+                        -320,
+                        -320,
+                    ),
+                    border_val=(
+                        114,
+                        114,
+                        114,
+                    ),
+                    max_aspect_ratio=100,
+                    max_rotate_degree=0.0,
+                    max_shear_degree=0.0,
+                    scaling_ratio_range=(
+                        0.09999999999999998,
+                        1.9,
+                    ),
+                    type='YOLOv5RandomAffine'),
+            ],
+            prob=0.15,
+            type='YOLOv5MixUp'),
+        dict(
+            bbox_params=dict(
+                format='pascal_voc',
+                label_fields=[
+                    'gt_bboxes_labels',
+                    'gt_ignore_flags',
+                ],
+                type='BboxParams'),
+            keymap=dict(gt_bboxes='bboxes', img='image'),
+            transforms=[
+                dict(p=0.01, type='Blur'),
+                dict(p=0.01, type='MedianBlur'),
+                dict(p=0.01, type='ToGray'),
+                dict(p=0.01, type='CLAHE'),
+            ],
+            type='mmdet.Albu'),
+        dict(type='YOLOv5HSVRandomAug'),
+        dict(prob=0.5, type='mmdet.RandomFlip'),
+        dict(
+            meta_keys=(
+                'img_id',
+                'img_path',
+                'ori_shape',
+                'img_shape',
+                'flip',
+                'flip_direction',
+            ),
+            type='mmdet.PackDetInputs'),
+    ],
+    type='YOLOv5CocoDataset')
+coco_val_dataset = dict(
+    ann_file='train_ann3.json',
+    data_prefix=dict(img='train_img'),
+    data_root='vehicle_detection_satellite_coco',
+    filter_cfg=dict(filter_empty_gt=False, min_size=32),
+    metainfo=dict(classes=(
+        'camping car',
+        'pickup',
+        'truck',
+    )),
+    pipeline=[
+        dict(backend_args=None, type='LoadImageFromFile'),
+        dict(scale=(
+            640,
+            640,
+        ), type='YOLOv5KeepRatioResize'),
+        dict(
+            allow_scale_up=False,
+            pad_val=dict(img=114),
+            scale=(
+                640,
+                640,
+            ),
+            type='LetterResize'),
+        dict(_scope_='mmdet', type='LoadAnnotations', with_bbox=True),
+        dict(
+            meta_keys=(
+                'img_id',
+                'img_path',
+                'ori_shape',
+                'img_shape',
+                'scale_factor',
+                'pad_param',
+            ),
+            type='mmdet.PackDetInputs'),
+    ],
+    type='YOLOv5CocoDataset')
+custom_hooks = [
+    dict(
+        ema_type='ExpMomentumEMA',
+        momentum=0.0001,
+        priority=49,
+        strict_load=False,
+        type='EMAHook',
+        update_buffers=True),
+    dict(
+        switch_epoch=20,
+        switch_pipeline=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(type='LoadAnnotations', with_bbox=True),
+            dict(scale=(
+                640,
+                640,
+            ), type='YOLOv5KeepRatioResize'),
+            dict(
+                allow_scale_up=True,
+                pad_val=dict(img=114.0),
+                scale=(
+                    640,
+                    640,
+                ),
+                type='LetterResize'),
+            dict(
+                border_val=(
+                    114,
+                    114,
+                    114,
+                ),
+                max_aspect_ratio=100,
+                max_rotate_degree=0.0,
+                max_shear_degree=0.0,
+                scaling_ratio_range=(
+                    0.09999999999999998,
+                    1.9,
+                ),
+                type='YOLOv5RandomAffine'),
+            dict(
+                bbox_params=dict(
+                    format='pascal_voc',
+                    label_fields=[
+                        'gt_bboxes_labels',
+                        'gt_ignore_flags',
+                    ],
+                    type='BboxParams'),
+                keymap=dict(gt_bboxes='bboxes', img='image'),
+                transforms=[
+                    dict(p=0.01, type='Blur'),
+                    dict(p=0.01, type='MedianBlur'),
+                    dict(p=0.01, type='ToGray'),
+                    dict(p=0.01, type='CLAHE'),
+                ],
+                type='mmdet.Albu'),
+            dict(type='YOLOv5HSVRandomAug'),
+            dict(prob=0.5, type='mmdet.RandomFlip'),
+            dict(
+                meta_keys=(
+                    'img_id',
+                    'img_path',
+                    'ori_shape',
+                    'img_shape',
+                    'flip',
+                    'flip_direction',
+                ),
+                type='mmdet.PackDetInputs'),
+        ],
+        type='mmdet.PipelineSwitchHook'),
+]
+custom_imports = dict(
+    allow_failed_imports=False, imports=[
+        'yolo_world',
+    ])
+data_root = 'data/coco/'
+dataset_type = 'YOLOv5CocoDataset'
+deepen_factor = 1.0
+default_hooks = dict(
+    checkpoint=dict(
+        interval=5, max_keep_ckpts=-1, save_best=None, type='CheckpointHook'),
+    logger=dict(interval=50, type='LoggerHook'),
+    param_scheduler=dict(
+        lr_factor=0.01,
+        max_epochs=50,
+        scheduler_type='linear',
+        type='YOLOv5ParamSchedulerHook'),
+    sampler_seed=dict(type='DistSamplerSeedHook'),
+    timer=dict(type='IterTimerHook'),
+    visualization=dict(type='mmdet.DetVisualizationHook'))
+default_scope = 'mmyolo'
+env_cfg = dict(
+    cudnn_benchmark=True,
+    dist_cfg=dict(backend='nccl'),
+    mp_cfg=dict(mp_start_method='fork', opencv_num_threads=0))
+img_scale = (
+    640,
+    640,
+)
+img_scales = [
+    (
+        640,
+        640,
+    ),
+    (
+        320,
+        320,
+    ),
+    (
+        960,
+        960,
+    ),
+]
+last_stage_out_channels = 512
+last_transform = [
+    dict(
+        bbox_params=dict(
+            format='pascal_voc',
+            label_fields=[
+                'gt_bboxes_labels',
+                'gt_ignore_flags',
+            ],
+            type='BboxParams'),
+        keymap=dict(gt_bboxes='bboxes', img='image'),
+        transforms=[
+            dict(p=0.01, type='Blur'),
+            dict(p=0.01, type='MedianBlur'),
+            dict(p=0.01, type='ToGray'),
+            dict(p=0.01, type='CLAHE'),
+        ],
+        type='mmdet.Albu'),
+    dict(type='YOLOv5HSVRandomAug'),
+    dict(prob=0.5, type='mmdet.RandomFlip'),
+    dict(
+        meta_keys=(
+            'img_id',
+            'img_path',
+            'ori_shape',
+            'img_shape',
+            'flip',
+            'flip_direction',
+        ),
+        type='mmdet.PackDetInputs'),
+]
+load_from = 'pretrained_models/yolo_world_v2_l_vlpan_bn_sgd_1e-3_40e_8gpus_finetune_coco_ep80-e1288152.pth'
+log_level = 'INFO'
+log_processor = dict(by_epoch=True, type='LogProcessor', window_size=50)
+loss_bbox_weight = 7.5
+loss_cls_weight = 0.5
+loss_dfl_weight = 0.375
+lr_factor = 0.01
+max_aspect_ratio = 100
+max_epochs = 50
+max_keep_ckpts = 2
+meta_info = dict(classes=(
+    'camping car',
+    'pickup',
+    'truck',
+))
+mixup_prob = 0.15
+model = dict(
+    backbone=dict(
+        image_model=dict(
+            act_cfg=dict(inplace=True, type='SiLU'),
+            arch='P5',
+            deepen_factor=1.0,
+            last_stage_out_channels=512,
+            norm_cfg=dict(eps=0.001, momentum=0.03, type='BN'),
+            type='YOLOv8CSPDarknet',
+            widen_factor=1.0),
+        text_model=None,
+        type='MultiModalYOLOBackbone',
+        with_text_model=False),
+    bbox_head=dict(
+        bbox_coder=dict(type='DistancePointBBoxCoder'),
+        head_module=dict(
+            act_cfg=dict(inplace=True, type='SiLU'),
+            embed_dims=512,
+            featmap_strides=[
+                8,
+                16,
+                32,
+            ],
+            freeze_all=False,
+            in_channels=[
+                256,
+                512,
+                512,
+            ],
+            norm_cfg=dict(eps=0.001, momentum=0.03, type='BN'),
+            num_classes=3,
+            reg_max=16,
+            type='YOLOWorldHeadModule',
+            use_bn_head=True,
+            widen_factor=1.0),
+        loss_bbox=dict(
+            bbox_format='xyxy',
+            iou_mode='ciou',
+            loss_weight=7.5,
+            reduction='sum',
+            return_iou=False,
+            type='IoULoss'),
+        loss_cls=dict(
+            loss_weight=0.5,
+            reduction='none',
+            type='mmdet.CrossEntropyLoss',
+            use_sigmoid=True),
+        loss_dfl=dict(
+            loss_weight=0.375,
+            reduction='mean',
+            type='mmdet.DistributionFocalLoss'),
+        prior_generator=dict(
+            offset=0.5, strides=[
+                8,
+                16,
+                32,
+            ], type='mmdet.MlvlPointGenerator'),
+        type='YOLOWorldHead'),
+    data_preprocessor=dict(
+        bgr_to_rgb=True,
+        mean=[
+            0.0,
+            0.0,
+            0.0,
+        ],
+        std=[
+            255.0,
+            255.0,
+            255.0,
+        ],
+        type='YOLOv5DetDataPreprocessor'),
+    embedding_path='MLCV_yoloworld_training_tuned_image_embeddings.npy',
+    freeze_prompt=True,
+    mm_neck=True,
+    neck=dict(
+        act_cfg=dict(inplace=True, type='SiLU'),
+        block_cfg=dict(type='MaxSigmoidCSPLayerWithTwoConv'),
+        deepen_factor=1.0,
+        embed_channels=[
+            128,
+            256,
+            256,
+        ],
+        freeze_all=False,
+        guide_channels=512,
+        in_channels=[
+            256,
+            512,
+            512,
+        ],
+        norm_cfg=dict(eps=0.001, momentum=0.03, type='BN'),
+        num_csp_blocks=3,
+        num_heads=[
+            4,
+            8,
+            8,
+        ],
+        out_channels=[
+            256,
+            512,
+            512,
+        ],
+        type='YOLOWorldPAFPN',
+        widen_factor=1.0),
+    num_prompts=3,
+    num_test_classes=3,
+    num_train_classes=3,
+    prompt_dim=512,
+    test_cfg=dict(
+        max_per_img=300,
+        multi_label=True,
+        nms=dict(iou_threshold=0.7, type='nms'),
+        nms_pre=30000,
+        score_thr=0.001),
+    train_cfg=dict(
+        assigner=dict(
+            alpha=0.5,
+            beta=6.0,
+            eps=1e-09,
+            num_classes=3,
+            topk=10,
+            type='BatchTaskAlignedAssigner',
+            use_ciou=True)),
+    type='SimpleYOLOWorldDetector')
+model_test_cfg = dict(
+    max_per_img=300,
+    multi_label=True,
+    nms=dict(iou_threshold=0.7, type='nms'),
+    nms_pre=30000,
+    score_thr=0.001)
+mosaic_affine_transform = [
+    dict(
+        img_scale=(
+            640,
+            640,
+        ),
+        pad_val=114.0,
+        pre_transform=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(type='LoadAnnotations', with_bbox=True),
+        ],
+        type='Mosaic'),
+    dict(
+        border=(
+            -320,
+            -320,
+        ),
+        border_val=(
+            114,
+            114,
+            114,
+        ),
+        max_aspect_ratio=100,
+        max_rotate_degree=0.0,
+        max_shear_degree=0.0,
+        scaling_ratio_range=(
+            0.09999999999999998,
+            1.9,
+        ),
+        type='YOLOv5RandomAffine'),
+]
+neck_embed_channels = [
+    128,
+    256,
+    256,
+]
+neck_num_heads = [
+    4,
+    8,
+    8,
+]
+norm_cfg = dict(eps=0.001, momentum=0.03, type='BN')
+num_classes = 3
+num_det_layers = 3
+num_training_classes = 3
+optim_wrapper = dict(
+    clip_grad=dict(max_norm=10.0),
+    constructor='YOLOv5OptimizerConstructor',
+    optimizer=dict(
+        batch_size_per_gpu=4,
+        lr=0.002,
+        momentum=0.937,
+        nesterov=True,
+        type='SGD',
+        weight_decay=0.0005),
+    type='OptimWrapper')
+param_scheduler = None
+persistent_workers = False
+pre_transform = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(type='LoadAnnotations', with_bbox=True),
+]
+resume = False
+save_epoch_intervals = 5
+strides = [
+    8,
+    16,
+    32,
+]
+tal_alpha = 0.5
+tal_beta = 6.0
+tal_topk = 10
+test_cfg = dict(type='TestLoop')
+test_dataloader = dict(
+    batch_size=1,
+    dataset=dict(
+        ann_file='train_ann3.json',
+        batch_shapes_cfg=None,
+        data_prefix=dict(img='train_img'),
+        data_root='vehicle_detection_satellite_coco',
+        filter_cfg=dict(filter_empty_gt=False, min_size=32),
+        metainfo=dict(classes=(
+            'camping car',
+            'pickup',
+            'truck',
+        )),
+        pipeline=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(scale=(
+                640,
+                640,
+            ), type='YOLOv5KeepRatioResize'),
+            dict(
+                allow_scale_up=False,
+                pad_val=dict(img=114),
+                scale=(
+                    640,
+                    640,
+                ),
+                type='LetterResize'),
+            dict(_scope_='mmdet', type='LoadAnnotations', with_bbox=True),
+            dict(
+                meta_keys=(
+                    'img_id',
+                    'img_path',
+                    'ori_shape',
+                    'img_shape',
+                    'scale_factor',
+                    'pad_param',
+                ),
+                type='mmdet.PackDetInputs'),
+        ],
+        test_mode=True,
+        type='YOLOv5CocoDataset'),
+    drop_last=False,
+    num_workers=2,
+    persistent_workers=True,
+    pin_memory=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+test_evaluator = dict(
+    ann_file='vehicle_detection_satellite_coco/train_ann3.json',
+    classwise=True,
+    metric='bbox',
+    proposal_nums=(
+        100,
+        50,
+        20,
+    ),
+    type='mmdet.CocoMetric')
+test_pipeline = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(scale=(
+        640,
+        640,
+    ), type='YOLOv5KeepRatioResize'),
+    dict(
+        allow_scale_up=False,
+        pad_val=dict(img=114),
+        scale=(
+            640,
+            640,
+        ),
+        type='LetterResize'),
+    dict(_scope_='mmdet', type='LoadAnnotations', with_bbox=True),
+    dict(
+        meta_keys=(
+            'img_id',
+            'img_path',
+            'ori_shape',
+            'img_shape',
+            'scale_factor',
+            'pad_param',
+        ),
+        type='mmdet.PackDetInputs'),
+]
+text_channels = 512
+train_ann_file = 'annotations/instances_train2017.json'
+train_batch_size_per_gpu = 4
+train_cfg = dict(
+    dynamic_intervals=[
+        (
+            20,
+            1,
+        ),
+    ],
+    max_epochs=50,
+    type='EpochBasedTrainLoop',
+    val_interval=5)
+train_data_prefix = 'train2017/'
+train_dataloader = dict(
+    batch_size=4,
+    collate_fn=dict(type='yolow_collate'),
+    dataset=dict(
+        ann_file='test_ann3.json',
+        data_prefix=dict(img='test_img'),
+        data_root='vehicle_detection_satellite_coco',
+        filter_cfg=dict(filter_empty_gt=False, min_size=32),
+        metainfo=dict(classes=(
+            'camping car',
+            'pickup',
+            'truck',
+        )),
+        pipeline=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(type='LoadAnnotations', with_bbox=True),
+            dict(
+                img_scale=(
+                    640,
+                    640,
+                ),
+                pad_val=114.0,
+                pre_transform=[
+                    dict(backend_args=None, type='LoadImageFromFile'),
+                    dict(type='LoadAnnotations', with_bbox=True),
+                ],
+                type='Mosaic'),
+            dict(
+                border=(
+                    -320,
+                    -320,
+                ),
+                border_val=(
+                    114,
+                    114,
+                    114,
+                ),
+                max_aspect_ratio=100,
+                max_rotate_degree=0.0,
+                max_shear_degree=0.0,
+                scaling_ratio_range=(
+                    0.09999999999999998,
+                    1.9,
+                ),
+                type='YOLOv5RandomAffine'),
+            dict(
+                pre_transform=[
+                    dict(backend_args=None, type='LoadImageFromFile'),
+                    dict(type='LoadAnnotations', with_bbox=True),
+                    dict(
+                        img_scale=(
+                            640,
+                            640,
+                        ),
+                        pad_val=114.0,
+                        pre_transform=[
+                            dict(backend_args=None, type='LoadImageFromFile'),
+                            dict(type='LoadAnnotations', with_bbox=True),
+                        ],
+                        type='Mosaic'),
+                    dict(
+                        border=(
+                            -320,
+                            -320,
+                        ),
+                        border_val=(
+                            114,
+                            114,
+                            114,
+                        ),
+                        max_aspect_ratio=100,
+                        max_rotate_degree=0.0,
+                        max_shear_degree=0.0,
+                        scaling_ratio_range=(
+                            0.09999999999999998,
+                            1.9,
+                        ),
+                        type='YOLOv5RandomAffine'),
+                ],
+                prob=0.15,
+                type='YOLOv5MixUp'),
+            dict(
+                bbox_params=dict(
+                    format='pascal_voc',
+                    label_fields=[
+                        'gt_bboxes_labels',
+                        'gt_ignore_flags',
+                    ],
+                    type='BboxParams'),
+                keymap=dict(gt_bboxes='bboxes', img='image'),
+                transforms=[
+                    dict(p=0.01, type='Blur'),
+                    dict(p=0.01, type='MedianBlur'),
+                    dict(p=0.01, type='ToGray'),
+                    dict(p=0.01, type='CLAHE'),
+                ],
+                type='mmdet.Albu'),
+            dict(type='YOLOv5HSVRandomAug'),
+            dict(prob=0.5, type='mmdet.RandomFlip'),
+            dict(
+                meta_keys=(
+                    'img_id',
+                    'img_path',
+                    'ori_shape',
+                    'img_shape',
+                    'flip',
+                    'flip_direction',
+                ),
+                type='mmdet.PackDetInputs'),
+        ],
+        type='YOLOv5CocoDataset'),
+    num_workers=8,
+    persistent_workers=False,
+    pin_memory=True,
+    sampler=dict(shuffle=True, type='DefaultSampler'))
+train_num_workers = 8
+train_pipeline = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(type='LoadAnnotations', with_bbox=True),
+    dict(
+        img_scale=(
+            640,
+            640,
+        ),
+        pad_val=114.0,
+        pre_transform=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(type='LoadAnnotations', with_bbox=True),
+        ],
+        type='Mosaic'),
+    dict(
+        border=(
+            -320,
+            -320,
+        ),
+        border_val=(
+            114,
+            114,
+            114,
+        ),
+        max_aspect_ratio=100,
+        max_rotate_degree=0.0,
+        max_shear_degree=0.0,
+        scaling_ratio_range=(
+            0.09999999999999998,
+            1.9,
+        ),
+        type='YOLOv5RandomAffine'),
+    dict(
+        pre_transform=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(type='LoadAnnotations', with_bbox=True),
+            dict(
+                img_scale=(
+                    640,
+                    640,
+                ),
+                pad_val=114.0,
+                pre_transform=[
+                    dict(backend_args=None, type='LoadImageFromFile'),
+                    dict(type='LoadAnnotations', with_bbox=True),
+                ],
+                type='Mosaic'),
+            dict(
+                border=(
+                    -320,
+                    -320,
+                ),
+                border_val=(
+                    114,
+                    114,
+                    114,
+                ),
+                max_aspect_ratio=100,
+                max_rotate_degree=0.0,
+                max_shear_degree=0.0,
+                scaling_ratio_range=(
+                    0.09999999999999998,
+                    1.9,
+                ),
+                type='YOLOv5RandomAffine'),
+        ],
+        prob=0.15,
+        type='YOLOv5MixUp'),
+    dict(
+        bbox_params=dict(
+            format='pascal_voc',
+            label_fields=[
+                'gt_bboxes_labels',
+                'gt_ignore_flags',
+            ],
+            type='BboxParams'),
+        keymap=dict(gt_bboxes='bboxes', img='image'),
+        transforms=[
+            dict(p=0.01, type='Blur'),
+            dict(p=0.01, type='MedianBlur'),
+            dict(p=0.01, type='ToGray'),
+            dict(p=0.01, type='CLAHE'),
+        ],
+        type='mmdet.Albu'),
+    dict(type='YOLOv5HSVRandomAug'),
+    dict(prob=0.5, type='mmdet.RandomFlip'),
+    dict(
+        meta_keys=(
+            'img_id',
+            'img_path',
+            'ori_shape',
+            'img_shape',
+            'flip',
+            'flip_direction',
+        ),
+        type='mmdet.PackDetInputs'),
+]
+train_pipeline_stage2 = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(type='LoadAnnotations', with_bbox=True),
+    dict(scale=(
+        640,
+        640,
+    ), type='YOLOv5KeepRatioResize'),
+    dict(
+        allow_scale_up=True,
+        pad_val=dict(img=114.0),
+        scale=(
+            640,
+            640,
+        ),
+        type='LetterResize'),
+    dict(
+        border_val=(
+            114,
+            114,
+            114,
+        ),
+        max_aspect_ratio=100,
+        max_rotate_degree=0.0,
+        max_shear_degree=0.0,
+        scaling_ratio_range=(
+            0.09999999999999998,
+            1.9,
+        ),
+        type='YOLOv5RandomAffine'),
+    dict(
+        bbox_params=dict(
+            format='pascal_voc',
+            label_fields=[
+                'gt_bboxes_labels',
+                'gt_ignore_flags',
+            ],
+            type='BboxParams'),
+        keymap=dict(gt_bboxes='bboxes', img='image'),
+        transforms=[
+            dict(p=0.01, type='Blur'),
+            dict(p=0.01, type='MedianBlur'),
+            dict(p=0.01, type='ToGray'),
+            dict(p=0.01, type='CLAHE'),
+        ],
+        type='mmdet.Albu'),
+    dict(type='YOLOv5HSVRandomAug'),
+    dict(prob=0.5, type='mmdet.RandomFlip'),
+    dict(
+        meta_keys=(
+            'img_id',
+            'img_path',
+            'ori_shape',
+            'img_shape',
+            'flip',
+            'flip_direction',
+        ),
+        type='mmdet.PackDetInputs'),
+]
+tta_model = dict(
+    tta_cfg=dict(max_per_img=300, nms=dict(iou_threshold=0.65, type='nms')),
+    type='mmdet.DetTTAModel')
+tta_pipeline = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(
+        transforms=[
+            [
+                dict(
+                    transforms=[
+                        dict(scale=(
+                            640,
+                            640,
+                        ), type='YOLOv5KeepRatioResize'),
+                        dict(
+                            allow_scale_up=False,
+                            pad_val=dict(img=114),
+                            scale=(
+                                640,
+                                640,
+                            ),
+                            type='LetterResize'),
+                    ],
+                    type='Compose'),
+                dict(
+                    transforms=[
+                        dict(scale=(
+                            320,
+                            320,
+                        ), type='YOLOv5KeepRatioResize'),
+                        dict(
+                            allow_scale_up=False,
+                            pad_val=dict(img=114),
+                            scale=(
+                                320,
+                                320,
+                            ),
+                            type='LetterResize'),
+                    ],
+                    type='Compose'),
+                dict(
+                    transforms=[
+                        dict(scale=(
+                            960,
+                            960,
+                        ), type='YOLOv5KeepRatioResize'),
+                        dict(
+                            allow_scale_up=False,
+                            pad_val=dict(img=114),
+                            scale=(
+                                960,
+                                960,
+                            ),
+                            type='LetterResize'),
+                    ],
+                    type='Compose'),
+            ],
+            [
+                dict(prob=1.0, type='mmdet.RandomFlip'),
+                dict(prob=0.0, type='mmdet.RandomFlip'),
+            ],
+            [
+                dict(type='mmdet.LoadAnnotations', with_bbox=True),
+            ],
+            [
+                dict(
+                    meta_keys=(
+                        'img_id',
+                        'img_path',
+                        'ori_shape',
+                        'img_shape',
+                        'scale_factor',
+                        'pad_param',
+                        'flip',
+                        'flip_direction',
+                    ),
+                    type='mmdet.PackDetInputs'),
+            ],
+        ],
+        type='TestTimeAug'),
+]
+val_ann_file = 'annotations/instances_val2017.json'
+val_batch_size_per_gpu = 1
+val_cfg = dict(type='ValLoop')
+val_data_prefix = 'val2017/'
+val_dataloader = dict(
+    batch_size=1,
+    dataset=dict(
+        ann_file='train_ann3.json',
+        batch_shapes_cfg=None,
+        data_prefix=dict(img='train_img'),
+        data_root='vehicle_detection_satellite_coco',
+        filter_cfg=dict(filter_empty_gt=False, min_size=32),
+        metainfo=dict(classes=(
+            'camping car',
+            'pickup',
+            'truck',
+        )),
+        pipeline=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(scale=(
+                640,
+                640,
+            ), type='YOLOv5KeepRatioResize'),
+            dict(
+                allow_scale_up=False,
+                pad_val=dict(img=114),
+                scale=(
+                    640,
+                    640,
+                ),
+                type='LetterResize'),
+            dict(_scope_='mmdet', type='LoadAnnotations', with_bbox=True),
+            dict(
+                meta_keys=(
+                    'img_id',
+                    'img_path',
+                    'ori_shape',
+                    'img_shape',
+                    'scale_factor',
+                    'pad_param',
+                ),
+                type='mmdet.PackDetInputs'),
+        ],
+        test_mode=True,
+        type='YOLOv5CocoDataset'),
+    drop_last=False,
+    num_workers=2,
+    persistent_workers=True,
+    pin_memory=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+val_evaluator = dict(
+    ann_file='vehicle_detection_satellite_coco/train_ann3.json',
+    classwise=True,
+    metric='bbox',
+    proposal_nums=(
+        100,
+        50,
+        20,
+    ),
+    type='mmdet.CocoMetric')
+val_interval_stage2 = 1
+val_num_workers = 2
+vis_backends = [
+    dict(type='LocalVisBackend'),
+]
+visualizer = dict(
+    name='visualizer',
+    type='mmdet.DetLocalVisualizer',
+    vis_backends=[
+        dict(type='LocalVisBackend'),
+    ])
+weight_decay = 0.0005
+widen_factor = 1.0
+work_dir = '.'
+
+2024/11/08 13:43:21 - mmengine - INFO - Distributed training is not used, all SyncBatchNorm (SyncBN) layers in the model will be automatically reverted to BatchNormXd layers if they are used.
+2024/11/08 13:43:21 - mmengine - INFO - Hooks will be executed in the following order:
+before_run:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(49          ) EMAHook                            
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_load_checkpoint:
+(49          ) EMAHook                            
+ -------------------- 
+before_train:
+(9           ) YOLOv5ParamSchedulerHook           
+(VERY_HIGH   ) RuntimeInfoHook                    
+(49          ) EMAHook                            
+(NORMAL      ) IterTimerHook                      
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_train_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DistSamplerSeedHook                
+(NORMAL      ) PipelineSwitchHook                 
+ -------------------- 
+before_train_iter:
+(9           ) YOLOv5ParamSchedulerHook           
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_train_iter:
+(9           ) YOLOv5ParamSchedulerHook           
+(VERY_HIGH   ) RuntimeInfoHook                    
+(49          ) EMAHook                            
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_train_epoch:
+(9           ) YOLOv5ParamSchedulerHook           
+(NORMAL      ) IterTimerHook                      
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_val_epoch:
+(49          ) EMAHook                            
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_val_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_val_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DetVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_val_epoch:
+(9           ) YOLOv5ParamSchedulerHook           
+(VERY_HIGH   ) RuntimeInfoHook                    
+(49          ) EMAHook                            
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_save_checkpoint:
+(49          ) EMAHook                            
+ -------------------- 
+after_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_test_epoch:
+(49          ) EMAHook                            
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_test_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_test_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DetVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(49          ) EMAHook                            
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_run:
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+2024/11/08 13:43:30 - mmengine - INFO - Optimizer groups: 121 .bias, 111 conv.weight, 104 other
+Name of parameter - Initialization information
+
+embeddings - torch.Size([3, 512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stem.conv.weight - torch.Size([64, 3, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stem.bn.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stem.bn.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage1.0.conv.weight - torch.Size([128, 64, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage1.0.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage1.0.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage1.1.main_conv.conv.weight - torch.Size([128, 128, 1, 1]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage1.1.main_conv.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage1.1.main_conv.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage1.1.final_conv.conv.weight - torch.Size([128, 320, 1, 1]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage1.1.final_conv.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage1.1.final_conv.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage1.1.blocks.0.conv1.conv.weight - torch.Size([64, 64, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage1.1.blocks.0.conv1.bn.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage1.1.blocks.0.conv1.bn.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage1.1.blocks.0.conv2.conv.weight - torch.Size([64, 64, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage1.1.blocks.0.conv2.bn.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage1.1.blocks.0.conv2.bn.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage1.1.blocks.1.conv1.conv.weight - torch.Size([64, 64, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage1.1.blocks.1.conv1.bn.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage1.1.blocks.1.conv1.bn.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage1.1.blocks.1.conv2.conv.weight - torch.Size([64, 64, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage1.1.blocks.1.conv2.bn.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage1.1.blocks.1.conv2.bn.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage1.1.blocks.2.conv1.conv.weight - torch.Size([64, 64, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage1.1.blocks.2.conv1.bn.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage1.1.blocks.2.conv1.bn.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage1.1.blocks.2.conv2.conv.weight - torch.Size([64, 64, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage1.1.blocks.2.conv2.bn.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage1.1.blocks.2.conv2.bn.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.0.conv.weight - torch.Size([256, 128, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage2.0.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.0.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.main_conv.conv.weight - torch.Size([256, 256, 1, 1]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage2.1.main_conv.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.main_conv.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.final_conv.conv.weight - torch.Size([256, 1024, 1, 1]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage2.1.final_conv.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.final_conv.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.blocks.0.conv1.conv.weight - torch.Size([128, 128, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage2.1.blocks.0.conv1.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.blocks.0.conv1.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.blocks.0.conv2.conv.weight - torch.Size([128, 128, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage2.1.blocks.0.conv2.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.blocks.0.conv2.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.blocks.1.conv1.conv.weight - torch.Size([128, 128, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage2.1.blocks.1.conv1.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.blocks.1.conv1.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.blocks.1.conv2.conv.weight - torch.Size([128, 128, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage2.1.blocks.1.conv2.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.blocks.1.conv2.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.blocks.2.conv1.conv.weight - torch.Size([128, 128, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage2.1.blocks.2.conv1.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.blocks.2.conv1.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.blocks.2.conv2.conv.weight - torch.Size([128, 128, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage2.1.blocks.2.conv2.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.blocks.2.conv2.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.blocks.3.conv1.conv.weight - torch.Size([128, 128, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage2.1.blocks.3.conv1.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.blocks.3.conv1.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.blocks.3.conv2.conv.weight - torch.Size([128, 128, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage2.1.blocks.3.conv2.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.blocks.3.conv2.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.blocks.4.conv1.conv.weight - torch.Size([128, 128, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage2.1.blocks.4.conv1.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.blocks.4.conv1.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.blocks.4.conv2.conv.weight - torch.Size([128, 128, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage2.1.blocks.4.conv2.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.blocks.4.conv2.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.blocks.5.conv1.conv.weight - torch.Size([128, 128, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage2.1.blocks.5.conv1.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.blocks.5.conv1.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.blocks.5.conv2.conv.weight - torch.Size([128, 128, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage2.1.blocks.5.conv2.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage2.1.blocks.5.conv2.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.0.conv.weight - torch.Size([512, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage3.0.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.0.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.main_conv.conv.weight - torch.Size([512, 512, 1, 1]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage3.1.main_conv.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.main_conv.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.final_conv.conv.weight - torch.Size([512, 2048, 1, 1]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage3.1.final_conv.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.final_conv.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.blocks.0.conv1.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage3.1.blocks.0.conv1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.blocks.0.conv1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.blocks.0.conv2.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage3.1.blocks.0.conv2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.blocks.0.conv2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.blocks.1.conv1.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage3.1.blocks.1.conv1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.blocks.1.conv1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.blocks.1.conv2.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage3.1.blocks.1.conv2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.blocks.1.conv2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.blocks.2.conv1.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage3.1.blocks.2.conv1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.blocks.2.conv1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.blocks.2.conv2.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage3.1.blocks.2.conv2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.blocks.2.conv2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.blocks.3.conv1.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage3.1.blocks.3.conv1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.blocks.3.conv1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.blocks.3.conv2.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage3.1.blocks.3.conv2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.blocks.3.conv2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.blocks.4.conv1.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage3.1.blocks.4.conv1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.blocks.4.conv1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.blocks.4.conv2.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage3.1.blocks.4.conv2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.blocks.4.conv2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.blocks.5.conv1.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage3.1.blocks.5.conv1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.blocks.5.conv1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.blocks.5.conv2.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage3.1.blocks.5.conv2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage3.1.blocks.5.conv2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage4.0.conv.weight - torch.Size([512, 512, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage4.0.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage4.0.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage4.1.main_conv.conv.weight - torch.Size([512, 512, 1, 1]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage4.1.main_conv.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage4.1.main_conv.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage4.1.final_conv.conv.weight - torch.Size([512, 1280, 1, 1]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage4.1.final_conv.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage4.1.final_conv.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage4.1.blocks.0.conv1.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage4.1.blocks.0.conv1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage4.1.blocks.0.conv1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage4.1.blocks.0.conv2.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage4.1.blocks.0.conv2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage4.1.blocks.0.conv2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage4.1.blocks.1.conv1.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage4.1.blocks.1.conv1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage4.1.blocks.1.conv1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage4.1.blocks.1.conv2.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage4.1.blocks.1.conv2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage4.1.blocks.1.conv2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage4.1.blocks.2.conv1.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage4.1.blocks.2.conv1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage4.1.blocks.2.conv1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage4.1.blocks.2.conv2.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage4.1.blocks.2.conv2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage4.1.blocks.2.conv2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage4.2.conv1.conv.weight - torch.Size([256, 512, 1, 1]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage4.2.conv1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage4.2.conv1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage4.2.conv2.conv.weight - torch.Size([512, 1024, 1, 1]): 
+Initialized by user-defined `init_weights` in YOLOv8CSPDarknet  
+
+backbone.image_model.stage4.2.conv2.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+backbone.image_model.stage4.2.conv2.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.0.main_conv.conv.weight - torch.Size([512, 1024, 1, 1]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.top_down_layers.0.main_conv.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.0.main_conv.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.0.final_conv.conv.weight - torch.Size([512, 1536, 1, 1]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.top_down_layers.0.final_conv.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.0.final_conv.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.0.blocks.0.conv1.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.top_down_layers.0.blocks.0.conv1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.0.blocks.0.conv1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.0.blocks.0.conv2.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.top_down_layers.0.blocks.0.conv2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.0.blocks.0.conv2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.0.blocks.1.conv1.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.top_down_layers.0.blocks.1.conv1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.0.blocks.1.conv1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.0.blocks.1.conv2.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.top_down_layers.0.blocks.1.conv2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.0.blocks.1.conv2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.0.blocks.2.conv1.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.top_down_layers.0.blocks.2.conv1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.0.blocks.2.conv1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.0.blocks.2.conv2.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.top_down_layers.0.blocks.2.conv2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.0.blocks.2.conv2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.0.attn_block.bias - torch.Size([8]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.0.attn_block.guide_fc.weight - torch.Size([256, 512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.0.attn_block.guide_fc.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.0.attn_block.project_conv.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.top_down_layers.0.attn_block.project_conv.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.0.attn_block.project_conv.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.1.main_conv.conv.weight - torch.Size([256, 768, 1, 1]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.top_down_layers.1.main_conv.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.1.main_conv.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.1.final_conv.conv.weight - torch.Size([256, 768, 1, 1]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.top_down_layers.1.final_conv.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.1.final_conv.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.1.blocks.0.conv1.conv.weight - torch.Size([128, 128, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.top_down_layers.1.blocks.0.conv1.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.1.blocks.0.conv1.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.1.blocks.0.conv2.conv.weight - torch.Size([128, 128, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.top_down_layers.1.blocks.0.conv2.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.1.blocks.0.conv2.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.1.blocks.1.conv1.conv.weight - torch.Size([128, 128, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.top_down_layers.1.blocks.1.conv1.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.1.blocks.1.conv1.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.1.blocks.1.conv2.conv.weight - torch.Size([128, 128, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.top_down_layers.1.blocks.1.conv2.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.1.blocks.1.conv2.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.1.blocks.2.conv1.conv.weight - torch.Size([128, 128, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.top_down_layers.1.blocks.2.conv1.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.1.blocks.2.conv1.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.1.blocks.2.conv2.conv.weight - torch.Size([128, 128, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.top_down_layers.1.blocks.2.conv2.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.1.blocks.2.conv2.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.1.attn_block.bias - torch.Size([4]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.1.attn_block.guide_fc.weight - torch.Size([128, 512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.1.attn_block.guide_fc.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.1.attn_block.project_conv.conv.weight - torch.Size([128, 128, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.top_down_layers.1.attn_block.project_conv.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.top_down_layers.1.attn_block.project_conv.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.downsample_layers.0.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.downsample_layers.0.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.downsample_layers.0.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.downsample_layers.1.conv.weight - torch.Size([512, 512, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.downsample_layers.1.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.downsample_layers.1.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.0.main_conv.conv.weight - torch.Size([512, 768, 1, 1]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.bottom_up_layers.0.main_conv.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.0.main_conv.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.0.final_conv.conv.weight - torch.Size([512, 1536, 1, 1]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.bottom_up_layers.0.final_conv.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.0.final_conv.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.0.blocks.0.conv1.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.bottom_up_layers.0.blocks.0.conv1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.0.blocks.0.conv1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.0.blocks.0.conv2.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.bottom_up_layers.0.blocks.0.conv2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.0.blocks.0.conv2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.0.blocks.1.conv1.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.bottom_up_layers.0.blocks.1.conv1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.0.blocks.1.conv1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.0.blocks.1.conv2.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.bottom_up_layers.0.blocks.1.conv2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.0.blocks.1.conv2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.0.blocks.2.conv1.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.bottom_up_layers.0.blocks.2.conv1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.0.blocks.2.conv1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.0.blocks.2.conv2.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.bottom_up_layers.0.blocks.2.conv2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.0.blocks.2.conv2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.0.attn_block.bias - torch.Size([8]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.0.attn_block.guide_fc.weight - torch.Size([256, 512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.0.attn_block.guide_fc.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.0.attn_block.project_conv.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.bottom_up_layers.0.attn_block.project_conv.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.0.attn_block.project_conv.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.1.main_conv.conv.weight - torch.Size([512, 1024, 1, 1]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.bottom_up_layers.1.main_conv.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.1.main_conv.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.1.final_conv.conv.weight - torch.Size([512, 1536, 1, 1]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.bottom_up_layers.1.final_conv.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.1.final_conv.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.1.blocks.0.conv1.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.bottom_up_layers.1.blocks.0.conv1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.1.blocks.0.conv1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.1.blocks.0.conv2.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.bottom_up_layers.1.blocks.0.conv2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.1.blocks.0.conv2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.1.blocks.1.conv1.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.bottom_up_layers.1.blocks.1.conv1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.1.blocks.1.conv1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.1.blocks.1.conv2.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.bottom_up_layers.1.blocks.1.conv2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.1.blocks.1.conv2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.1.blocks.2.conv1.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.bottom_up_layers.1.blocks.2.conv1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.1.blocks.2.conv1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.1.blocks.2.conv2.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.bottom_up_layers.1.blocks.2.conv2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.1.blocks.2.conv2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.1.attn_block.bias - torch.Size([8]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.1.attn_block.guide_fc.weight - torch.Size([256, 512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.1.attn_block.guide_fc.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.1.attn_block.project_conv.conv.weight - torch.Size([256, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOWorldPAFPN  
+
+neck.bottom_up_layers.1.attn_block.project_conv.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+neck.bottom_up_layers.1.attn_block.project_conv.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_preds.0.0.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_preds.0.0.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_preds.0.0.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_preds.0.1.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_preds.0.1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_preds.0.1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_preds.0.2.weight - torch.Size([512, 256, 1, 1]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_preds.0.2.bias - torch.Size([512]): 
+Initialized by user-defined `init_weights` in YOLOWorldHeadModule  
+
+bbox_head.head_module.cls_preds.1.0.conv.weight - torch.Size([256, 512, 3, 3]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_preds.1.0.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_preds.1.0.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_preds.1.1.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_preds.1.1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_preds.1.1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_preds.1.2.weight - torch.Size([512, 256, 1, 1]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_preds.1.2.bias - torch.Size([512]): 
+Initialized by user-defined `init_weights` in YOLOWorldHeadModule  
+
+bbox_head.head_module.cls_preds.2.0.conv.weight - torch.Size([256, 512, 3, 3]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_preds.2.0.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_preds.2.0.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_preds.2.1.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_preds.2.1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_preds.2.1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_preds.2.2.weight - torch.Size([512, 256, 1, 1]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_preds.2.2.bias - torch.Size([512]): 
+Initialized by user-defined `init_weights` in YOLOWorldHeadModule  
+
+bbox_head.head_module.reg_preds.0.0.conv.weight - torch.Size([64, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.reg_preds.0.0.bn.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.reg_preds.0.0.bn.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.reg_preds.0.1.conv.weight - torch.Size([64, 64, 3, 3]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.reg_preds.0.1.bn.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.reg_preds.0.1.bn.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.reg_preds.0.2.weight - torch.Size([64, 64, 1, 1]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.reg_preds.0.2.bias - torch.Size([64]): 
+Initialized by user-defined `init_weights` in YOLOWorldHeadModule  
+
+bbox_head.head_module.reg_preds.1.0.conv.weight - torch.Size([64, 512, 3, 3]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.reg_preds.1.0.bn.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.reg_preds.1.0.bn.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.reg_preds.1.1.conv.weight - torch.Size([64, 64, 3, 3]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.reg_preds.1.1.bn.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.reg_preds.1.1.bn.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.reg_preds.1.2.weight - torch.Size([64, 64, 1, 1]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.reg_preds.1.2.bias - torch.Size([64]): 
+Initialized by user-defined `init_weights` in YOLOWorldHeadModule  
+
+bbox_head.head_module.reg_preds.2.0.conv.weight - torch.Size([64, 512, 3, 3]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.reg_preds.2.0.bn.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.reg_preds.2.0.bn.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.reg_preds.2.1.conv.weight - torch.Size([64, 64, 3, 3]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.reg_preds.2.1.bn.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.reg_preds.2.1.bn.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.reg_preds.2.2.weight - torch.Size([64, 64, 1, 1]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.reg_preds.2.2.bias - torch.Size([64]): 
+Initialized by user-defined `init_weights` in YOLOWorldHeadModule  
+
+bbox_head.head_module.cls_contrasts.0.bias - torch.Size([]): 
+Initialized by user-defined `init_weights` in YOLOWorldHeadModule  
+
+bbox_head.head_module.cls_contrasts.0.logit_scale - torch.Size([]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_contrasts.0.norm.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_contrasts.0.norm.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_contrasts.1.bias - torch.Size([]): 
+Initialized by user-defined `init_weights` in YOLOWorldHeadModule  
+
+bbox_head.head_module.cls_contrasts.1.logit_scale - torch.Size([]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_contrasts.1.norm.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_contrasts.1.norm.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_contrasts.2.bias - torch.Size([]): 
+Initialized by user-defined `init_weights` in YOLOWorldHeadModule  
+
+bbox_head.head_module.cls_contrasts.2.logit_scale - torch.Size([]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_contrasts.2.norm.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+
+bbox_head.head_module.cls_contrasts.2.norm.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SimpleYOLOWorldDetector  
+2024/11/08 13:43:31 - mmengine - INFO - Load checkpoint from pretrained_models/yolo_world_v2_l_vlpan_bn_sgd_1e-3_40e_8gpus_finetune_coco_ep80-e1288152.pth
+2024/11/08 13:43:31 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+2024/11/08 13:43:31 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+2024/11/08 13:43:31 - mmengine - INFO - Checkpoints will be saved to /fastdata/pelinsu/YOLO-World.
+2024/11/08 13:43:50 - mmengine - INFO - Epoch(train)  [1][50/56]  base_lr: 2.0000e-03 lr: 9.8000e-05  eta: 0:17:02  time: 0.3717  data_time: 0.0130  memory: 5505  grad_norm: 1000.6896  loss: 36.6679  loss_cls: 23.0194  loss_bbox: 7.1969  loss_dfl: 6.4515
+2024/11/08 13:43:54 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:44:11 - mmengine - INFO - Epoch(train)  [2][50/56]  base_lr: 2.0000e-03 lr: 2.0584e-04  eta: 0:16:31  time: 0.3305  data_time: 0.0120  memory: 5847  grad_norm: 409.0164  loss: 25.5889  loss_cls: 12.8372  loss_bbox: 6.6369  loss_dfl: 6.1148
+2024/11/08 13:44:12 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:44:29 - mmengine - INFO - Epoch(train)  [3][50/56]  base_lr: 2.0000e-03 lr: 3.0925e-04  eta: 0:15:36  time: 0.3337  data_time: 0.0123  memory: 5006  grad_norm: 340.2610  loss: 21.3811  loss_cls: 9.5828  loss_bbox: 6.0822  loss_dfl: 5.7161
+2024/11/08 13:44:31 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:44:48 - mmengine - INFO - Epoch(train)  [4][50/56]  base_lr: 2.0000e-03 lr: 4.0822e-04  eta: 0:15:01  time: 0.3344  data_time: 0.0116  memory: 5009  grad_norm: 276.1639  loss: 19.0436  loss_cls: 7.7533  loss_bbox: 5.7410  loss_dfl: 5.5493
+2024/11/08 13:44:50 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:45:07 - mmengine - INFO - Epoch(train)  [5][50/56]  base_lr: 2.0000e-03 lr: 5.0276e-04  eta: 0:14:35  time: 0.3391  data_time: 0.0116  memory: 5006  grad_norm: 266.0754  loss: 17.2207  loss_cls: 6.5137  loss_bbox: 5.3428  loss_dfl: 5.3641
+2024/11/08 13:45:09 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:45:09 - mmengine - INFO - Saving checkpoint at 5 epochs
+2024/11/08 13:45:11 - mmengine - WARNING - `save_param_scheduler` is True but `self.param_schedulers` is None, so skip saving parameter schedulers
+2024/11/08 13:45:13 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:45:13 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.169 | 0.281  | 0.111  | nan   | 0.221 | 0.219 |
+| pickup      | 0.027 | 0.057  | 0.023  | nan   | 0.018 | 0.338 |
+| truck       | 0.087 | 0.12   | 0.12   | nan   | 0.044 | 0.118 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:45:13 - mmengine - INFO - bbox_mAP_copypaste: 0.094 0.153 0.085 -1.000 0.094 0.225
+2024/11/08 13:45:13 - mmengine - INFO - Epoch(val) [5][28/28]    coco/camping car_precision: 0.1690  coco/pickup_precision: 0.0270  coco/truck_precision: 0.0870  coco/bbox_mAP: 0.0940  coco/bbox_mAP_50: 0.1530  coco/bbox_mAP_75: 0.0850  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.0940  coco/bbox_mAP_l: 0.2250  data_time: 0.0031  time: 0.0517
+2024/11/08 13:45:30 - mmengine - INFO - Epoch(train)  [6][50/56]  base_lr: 2.0000e-03 lr: 5.9286e-04  eta: 0:14:13  time: 0.3433  data_time: 0.0149  memory: 5004  grad_norm: 240.0084  loss: 15.5684  loss_cls: 5.4431  loss_bbox: 4.9660  loss_dfl: 5.1593
+2024/11/08 13:45:32 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:45:49 - mmengine - INFO - Epoch(train)  [7][50/56]  base_lr: 2.0000e-03 lr: 6.7852e-04  eta: 0:13:52  time: 0.3437  data_time: 0.0125  memory: 5057  grad_norm: 228.4151  loss: 14.9300  loss_cls: 5.0896  loss_bbox: 4.7791  loss_dfl: 5.0614
+2024/11/08 13:45:51 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:46:09 - mmengine - INFO - Epoch(train)  [8][50/56]  base_lr: 2.0000e-03 lr: 7.5975e-04  eta: 0:13:32  time: 0.3458  data_time: 0.0125  memory: 5004  grad_norm: 221.0808  loss: 13.9509  loss_cls: 4.5902  loss_bbox: 4.4922  loss_dfl: 4.8685
+2024/11/08 13:46:11 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:46:28 - mmengine - INFO - Epoch(train)  [9][50/56]  base_lr: 2.0000e-03 lr: 8.3655e-04  eta: 0:13:13  time: 0.3464  data_time: 0.0130  memory: 5004  grad_norm: 220.4717  loss: 13.4822  loss_cls: 4.3919  loss_bbox: 4.2674  loss_dfl: 4.8230
+2024/11/08 13:46:30 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:46:48 - mmengine - INFO - Epoch(train) [10][50/56]  base_lr: 2.0000e-03 lr: 9.0891e-04  eta: 0:12:53  time: 0.3454  data_time: 0.0115  memory: 5014  grad_norm: 225.4233  loss: 12.9143  loss_cls: 4.1504  loss_bbox: 4.0679  loss_dfl: 4.6959
+2024/11/08 13:46:50 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:46:50 - mmengine - INFO - Saving checkpoint at 10 epochs
+2024/11/08 13:46:53 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:46:53 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.234 | 0.329  | 0.182  | nan   | 0.237 | 0.356 |
+| pickup      | 0.085 | 0.109  | 0.102  | nan   | 0.038 | 0.653 |
+| truck       | 0.123 | 0.254  | 0.142  | nan   | 0.47  | 0.06  |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:46:53 - mmengine - INFO - bbox_mAP_copypaste: 0.147 0.231 0.142 -1.000 0.248 0.356
+2024/11/08 13:46:53 - mmengine - INFO - Epoch(val) [10][28/28]    coco/camping car_precision: 0.2340  coco/pickup_precision: 0.0850  coco/truck_precision: 0.1230  coco/bbox_mAP: 0.1470  coco/bbox_mAP_50: 0.2310  coco/bbox_mAP_75: 0.1420  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2480  coco/bbox_mAP_l: 0.3560  data_time: 0.0005  time: 0.0293
+2024/11/08 13:47:10 - mmengine - INFO - Epoch(train) [11][50/56]  base_lr: 2.0000e-03 lr: 9.7684e-04  eta: 0:12:33  time: 0.3436  data_time: 0.0119  memory: 5017  grad_norm: 229.3186  loss: 12.0929  loss_cls: 3.7052  loss_bbox: 3.8653  loss_dfl: 4.5224
+2024/11/08 13:47:12 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:47:29 - mmengine - INFO - Epoch(train) [12][50/56]  base_lr: 2.0000e-03 lr: 1.0403e-03  eta: 0:12:14  time: 0.3468  data_time: 0.0126  memory: 5004  grad_norm: 215.5472  loss: 11.9330  loss_cls: 3.7894  loss_bbox: 3.7158  loss_dfl: 4.4278
+2024/11/08 13:47:31 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:47:49 - mmengine - INFO - Epoch(train) [13][50/56]  base_lr: 2.0000e-03 lr: 1.0994e-03  eta: 0:11:55  time: 0.3468  data_time: 0.0119  memory: 5004  grad_norm: 203.1457  loss: 11.1819  loss_cls: 3.2655  loss_bbox: 3.6171  loss_dfl: 4.2993
+2024/11/08 13:47:51 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:48:08 - mmengine - INFO - Epoch(train) [14][50/56]  base_lr: 2.0000e-03 lr: 1.1540e-03  eta: 0:11:36  time: 0.3486  data_time: 0.0119  memory: 5004  grad_norm: 192.2598  loss: 11.3387  loss_cls: 3.4101  loss_bbox: 3.5547  loss_dfl: 4.3739
+2024/11/08 13:48:10 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:48:28 - mmengine - INFO - Epoch(train) [15][50/56]  base_lr: 2.0000e-03 lr: 1.2042e-03  eta: 0:11:16  time: 0.3471  data_time: 0.0120  memory: 5004  grad_norm: 176.0937  loss: 10.8617  loss_cls: 3.2381  loss_bbox: 3.4084  loss_dfl: 4.2152
+2024/11/08 13:48:30 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:48:30 - mmengine - INFO - Saving checkpoint at 15 epochs
+2024/11/08 13:48:33 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:48:33 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.193 | 0.313  | 0.106  | nan   | 0.264 | 0.16  |
+| pickup      | 0.197 | 0.25   | 0.243  | nan   | 0.044 | 0.85  |
+| truck       | 0.06  | 0.168  | 0.026  | nan   | 0.052 | 0.076 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:48:33 - mmengine - INFO - bbox_mAP_copypaste: 0.150 0.244 0.125 -1.000 0.120 0.362
+2024/11/08 13:48:33 - mmengine - INFO - Epoch(val) [15][28/28]    coco/camping car_precision: 0.1930  coco/pickup_precision: 0.1970  coco/truck_precision: 0.0600  coco/bbox_mAP: 0.1500  coco/bbox_mAP_50: 0.2440  coco/bbox_mAP_75: 0.1250  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1200  coco/bbox_mAP_l: 0.3620  data_time: 0.0005  time: 0.0293
+2024/11/08 13:48:50 - mmengine - INFO - Epoch(train) [16][50/56]  base_lr: 2.0000e-03 lr: 1.2499e-03  eta: 0:10:57  time: 0.3447  data_time: 0.0119  memory: 5004  grad_norm: 189.5314  loss: 11.0077  loss_cls: 3.3076  loss_bbox: 3.4476  loss_dfl: 4.2525
+2024/11/08 13:48:52 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:49:10 - mmengine - INFO - Epoch(train) [17][50/56]  base_lr: 2.0000e-03 lr: 1.2912e-03  eta: 0:10:38  time: 0.3470  data_time: 0.0119  memory: 5007  grad_norm: 211.5802  loss: 11.2622  loss_cls: 3.6837  loss_bbox: 3.3909  loss_dfl: 4.1876
+2024/11/08 13:49:11 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:49:28 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:49:29 - mmengine - INFO - Epoch(train) [18][50/56]  base_lr: 2.0000e-03 lr: 1.3268e-03  eta: 0:10:18  time: 0.3472  data_time: 0.0118  memory: 5004  grad_norm: 196.3029  loss: 11.2310  loss_cls: 3.6463  loss_bbox: 3.3937  loss_dfl: 4.1910
+2024/11/08 13:49:31 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:49:48 - mmengine - INFO - Epoch(train) [19][50/56]  base_lr: 2.0000e-03 lr: 1.3268e-03  eta: 0:09:59  time: 0.3477  data_time: 0.0120  memory: 5004  grad_norm: 175.3283  loss: 11.6600  loss_cls: 3.7701  loss_bbox: 3.5987  loss_dfl: 4.2912
+2024/11/08 13:49:50 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:49:51 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:49:51 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.447 | 0.672  | 0.603  | nan   | 0.464 | 0.566 |
+| pickup      | 0.041 | 0.088  | 0.036  | nan   | 0.029 | 0.351 |
+| truck       | 0.155 | 0.211  | 0.195  | nan   | 0.233 | 0.168 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:49:51 - mmengine - INFO - bbox_mAP_copypaste: 0.214 0.324 0.278 -1.000 0.242 0.362
+2024/11/08 13:49:51 - mmengine - INFO - Epoch(val) [19][28/28]    coco/camping car_precision: 0.4470  coco/pickup_precision: 0.0410  coco/truck_precision: 0.1550  coco/bbox_mAP: 0.2140  coco/bbox_mAP_50: 0.3240  coco/bbox_mAP_75: 0.2780  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2420  coco/bbox_mAP_l: 0.3620  data_time: 0.0005  time: 0.0295
+2024/11/08 13:50:09 - mmengine - INFO - Epoch(train) [20][50/56]  base_lr: 2.0000e-03 lr: 1.2872e-03  eta: 0:09:40  time: 0.3472  data_time: 0.0117  memory: 5004  grad_norm: 141.8703  loss: 10.6992  loss_cls: 3.2864  loss_bbox: 3.3821  loss_dfl: 4.0307
+2024/11/08 13:50:11 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:50:11 - mmengine - INFO - Saving checkpoint at 20 epochs
+2024/11/08 13:50:14 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:50:14 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.375 | 0.638  | 0.406  | nan   | 0.306 | 0.615 |
+| pickup      | 0.274 | 0.396  | 0.375  | nan   | 0.173 | 0.801 |
+| truck       | 0.036 | 0.061  | 0.044  | nan   | 0.066 | 0.038 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:50:14 - mmengine - INFO - bbox_mAP_copypaste: 0.228 0.365 0.275 -1.000 0.182 0.485
+2024/11/08 13:50:14 - mmengine - INFO - Epoch(val) [20][28/28]    coco/camping car_precision: 0.3750  coco/pickup_precision: 0.2740  coco/truck_precision: 0.0360  coco/bbox_mAP: 0.2280  coco/bbox_mAP_50: 0.3650  coco/bbox_mAP_75: 0.2750  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.1820  coco/bbox_mAP_l: 0.4850  data_time: 0.0004  time: 0.0291
+2024/11/08 13:50:14 - mmengine - INFO - Switch pipeline now!
+2024/11/08 13:50:31 - mmengine - INFO - Epoch(train) [21][50/56]  base_lr: 2.0000e-03 lr: 1.2476e-03  eta: 0:09:20  time: 0.3424  data_time: 0.0107  memory: 5001  grad_norm: 362.4923  loss: 19.3096  loss_cls: 7.1162  loss_bbox: 5.7807  loss_dfl: 6.4127
+2024/11/08 13:50:33 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:50:34 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:50:34 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.303 | 0.499  | 0.234  | nan   | 0.341 | 0.506 |
+| pickup      | 0.086 | 0.168  | 0.048  | nan   | 0.071 | 0.19  |
+| truck       | 0.091 | 0.181  | 0.052  | nan   | 0.368 | 0.0   |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:50:34 - mmengine - INFO - bbox_mAP_copypaste: 0.160 0.283 0.111 -1.000 0.260 0.232
+2024/11/08 13:50:34 - mmengine - INFO - Epoch(val) [21][28/28]    coco/camping car_precision: 0.3030  coco/pickup_precision: 0.0860  coco/truck_precision: 0.0910  coco/bbox_mAP: 0.1600  coco/bbox_mAP_50: 0.2830  coco/bbox_mAP_75: 0.1110  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2600  coco/bbox_mAP_l: 0.2320  data_time: 0.0005  time: 0.0292
+2024/11/08 13:50:51 - mmengine - INFO - Epoch(train) [22][50/56]  base_lr: 2.0000e-03 lr: 1.2080e-03  eta: 0:09:01  time: 0.3446  data_time: 0.0103  memory: 4947  grad_norm: 300.1989  loss: 18.4927  loss_cls: 6.8970  loss_bbox: 5.7039  loss_dfl: 5.8918
+2024/11/08 13:50:53 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:50:54 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:50:54 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.305 | 0.566  | 0.129  | nan   | 0.314 | 0.396 |
+| pickup      | 0.161 | 0.228  | 0.141  | nan   | 0.06  | 0.619 |
+| truck       | 0.17  | 0.28   | 0.172  | nan   | 0.332 | 0.049 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:50:54 - mmengine - INFO - bbox_mAP_copypaste: 0.212 0.358 0.147 -1.000 0.235 0.355
+2024/11/08 13:50:54 - mmengine - INFO - Epoch(val) [22][28/28]    coco/camping car_precision: 0.3050  coco/pickup_precision: 0.1610  coco/truck_precision: 0.1700  coco/bbox_mAP: 0.2120  coco/bbox_mAP_50: 0.3580  coco/bbox_mAP_75: 0.1470  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2350  coco/bbox_mAP_l: 0.3550  data_time: 0.0004  time: 0.0292
+2024/11/08 13:51:11 - mmengine - INFO - Epoch(train) [23][50/56]  base_lr: 2.0000e-03 lr: 1.1684e-03  eta: 0:08:42  time: 0.3438  data_time: 0.0104  memory: 4947  grad_norm: 255.7265  loss: 17.3153  loss_cls: 6.2606  loss_bbox: 5.5439  loss_dfl: 5.5108
+2024/11/08 13:51:13 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:51:14 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:51:14 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.454 | 0.725  | 0.473  | nan   | 0.361 | 0.659 |
+| pickup      | 0.174 | 0.223  | 0.185  | nan   | 0.103 | 0.561 |
+| truck       | 0.152 | 0.226  | 0.18   | nan   | 0.351 | 0.045 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:51:14 - mmengine - INFO - bbox_mAP_copypaste: 0.260 0.391 0.279 -1.000 0.272 0.421
+2024/11/08 13:51:14 - mmengine - INFO - Epoch(val) [23][28/28]    coco/camping car_precision: 0.4540  coco/pickup_precision: 0.1740  coco/truck_precision: 0.1520  coco/bbox_mAP: 0.2600  coco/bbox_mAP_50: 0.3910  coco/bbox_mAP_75: 0.2790  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2720  coco/bbox_mAP_l: 0.4210  data_time: 0.0005  time: 0.0292
+2024/11/08 13:51:32 - mmengine - INFO - Epoch(train) [24][50/56]  base_lr: 2.0000e-03 lr: 1.1288e-03  eta: 0:08:22  time: 0.3439  data_time: 0.0105  memory: 5001  grad_norm: 254.3920  loss: 18.1612  loss_cls: 6.6596  loss_bbox: 5.6957  loss_dfl: 5.8059
+2024/11/08 13:51:33 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:51:34 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:51:34 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.509 | 0.837  | 0.499  | nan   | 0.407 | 0.736 |
+| pickup      | 0.119 | 0.215  | 0.084  | nan   | 0.082 | 0.375 |
+| truck       | 0.311 | 0.455  | 0.38   | nan   | 0.438 | 0.286 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:51:34 - mmengine - INFO - bbox_mAP_copypaste: 0.313 0.502 0.321 -1.000 0.309 0.466
+2024/11/08 13:51:35 - mmengine - INFO - Epoch(val) [24][28/28]    coco/camping car_precision: 0.5090  coco/pickup_precision: 0.1190  coco/truck_precision: 0.3110  coco/bbox_mAP: 0.3130  coco/bbox_mAP_50: 0.5020  coco/bbox_mAP_75: 0.3210  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.3090  coco/bbox_mAP_l: 0.4660  data_time: 0.0005  time: 0.0291
+2024/11/08 13:51:52 - mmengine - INFO - Epoch(train) [25][50/56]  base_lr: 2.0000e-03 lr: 1.0892e-03  eta: 0:08:03  time: 0.3459  data_time: 0.0108  memory: 5001  grad_norm: 249.9859  loss: 16.8107  loss_cls: 5.6271  loss_bbox: 5.4654  loss_dfl: 5.7182
+2024/11/08 13:51:54 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:51:54 - mmengine - INFO - Saving checkpoint at 25 epochs
+2024/11/08 13:51:57 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:51:57 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.35  | 0.636  | 0.278  | nan   | 0.273 | 0.62  |
+| pickup      | 0.16  | 0.201  | 0.165  | nan   | 0.032 | 0.901 |
+| truck       | 0.169 | 0.318  | 0.112  | nan   | 0.372 | 0.031 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:51:57 - mmengine - INFO - bbox_mAP_copypaste: 0.226 0.385 0.185 -1.000 0.226 0.517
+2024/11/08 13:51:57 - mmengine - INFO - Epoch(val) [25][28/28]    coco/camping car_precision: 0.3500  coco/pickup_precision: 0.1600  coco/truck_precision: 0.1690  coco/bbox_mAP: 0.2260  coco/bbox_mAP_50: 0.3850  coco/bbox_mAP_75: 0.1850  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2260  coco/bbox_mAP_l: 0.5170  data_time: 0.0005  time: 0.0293
+2024/11/08 13:52:14 - mmengine - INFO - Epoch(train) [26][50/56]  base_lr: 2.0000e-03 lr: 1.0496e-03  eta: 0:07:44  time: 0.3419  data_time: 0.0110  memory: 5001  grad_norm: 248.7278  loss: 16.6762  loss_cls: 6.0001  loss_bbox: 5.3456  loss_dfl: 5.3305
+2024/11/08 13:52:16 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:52:17 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:52:17 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.216 | 0.381  | 0.201  | nan   | 0.141 | 0.426 |
+| pickup      | 0.137 | 0.193  | 0.16   | nan   | 0.046 | 0.668 |
+| truck       | 0.091 | 0.132  | 0.132  | nan   | 0.442 | 0.013 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:52:17 - mmengine - INFO - bbox_mAP_copypaste: 0.148 0.235 0.164 -1.000 0.209 0.369
+2024/11/08 13:52:17 - mmengine - INFO - Epoch(val) [26][28/28]    coco/camping car_precision: 0.2160  coco/pickup_precision: 0.1370  coco/truck_precision: 0.0910  coco/bbox_mAP: 0.1480  coco/bbox_mAP_50: 0.2350  coco/bbox_mAP_75: 0.1640  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.2090  coco/bbox_mAP_l: 0.3690  data_time: 0.0004  time: 0.0287
+2024/11/08 13:52:34 - mmengine - INFO - Epoch(train) [27][50/56]  base_lr: 2.0000e-03 lr: 1.0100e-03  eta: 0:07:24  time: 0.3431  data_time: 0.0107  memory: 5001  grad_norm: 235.8459  loss: 16.3588  loss_cls: 5.4903  loss_bbox: 5.3978  loss_dfl: 5.4706
+2024/11/08 13:52:36 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:52:37 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:52:37 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.388 | 0.558  | 0.487  | nan   | 0.45  | 0.568 |
+| pickup      | 0.103 | 0.166  | 0.137  | nan   | 0.144 | 0.137 |
+| truck       | 0.188 | 0.337  | 0.15   | nan   | 0.512 | 0.049 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:52:37 - mmengine - INFO - bbox_mAP_copypaste: 0.226 0.354 0.258 -1.000 0.369 0.252
+2024/11/08 13:52:37 - mmengine - INFO - Epoch(val) [27][28/28]    coco/camping car_precision: 0.3880  coco/pickup_precision: 0.1030  coco/truck_precision: 0.1880  coco/bbox_mAP: 0.2260  coco/bbox_mAP_50: 0.3540  coco/bbox_mAP_75: 0.2580  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.3690  coco/bbox_mAP_l: 0.2520  data_time: 0.0004  time: 0.0290
+2024/11/08 13:52:54 - mmengine - INFO - Epoch(train) [28][50/56]  base_lr: 2.0000e-03 lr: 9.7040e-04  eta: 0:07:05  time: 0.3443  data_time: 0.0109  memory: 5001  grad_norm: 212.8881  loss: 15.8174  loss_cls: 5.4758  loss_bbox: 5.1551  loss_dfl: 5.1865
+2024/11/08 13:52:56 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:52:57 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:52:57 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.449 | 0.657  | 0.507  | nan   | 0.439 | 0.588 |
+| pickup      | 0.234 | 0.329  | 0.282  | nan   | 0.162 | 0.618 |
+| truck       | 0.272 | 0.372  | 0.354  | nan   | 0.555 | 0.018 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:52:57 - mmengine - INFO - bbox_mAP_copypaste: 0.318 0.453 0.381 -1.000 0.386 0.408
+2024/11/08 13:52:57 - mmengine - INFO - Epoch(val) [28][28/28]    coco/camping car_precision: 0.4490  coco/pickup_precision: 0.2340  coco/truck_precision: 0.2720  coco/bbox_mAP: 0.3180  coco/bbox_mAP_50: 0.4530  coco/bbox_mAP_75: 0.3810  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.3860  coco/bbox_mAP_l: 0.4080  data_time: 0.0005  time: 0.0294
+2024/11/08 13:53:15 - mmengine - INFO - Epoch(train) [29][50/56]  base_lr: 2.0000e-03 lr: 9.3080e-04  eta: 0:06:46  time: 0.3440  data_time: 0.0109  memory: 5001  grad_norm: 199.5081  loss: 15.3443  loss_cls: 4.8929  loss_bbox: 5.1853  loss_dfl: 5.2661
+2024/11/08 13:53:16 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:53:17 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:53:17 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.306 | 0.502  | 0.257  | nan   | 0.311 | 0.373 |
+| pickup      | 0.137 | 0.192  | 0.17   | nan   | 0.101 | 0.668 |
+| truck       | 0.378 | 0.509  | 0.473  | nan   | 0.576 | 0.207 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:53:17 - mmengine - INFO - bbox_mAP_copypaste: 0.274 0.401 0.300 -1.000 0.329 0.416
+2024/11/08 13:53:17 - mmengine - INFO - Epoch(val) [29][28/28]    coco/camping car_precision: 0.3060  coco/pickup_precision: 0.1370  coco/truck_precision: 0.3780  coco/bbox_mAP: 0.2740  coco/bbox_mAP_50: 0.4010  coco/bbox_mAP_75: 0.3000  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.3290  coco/bbox_mAP_l: 0.4160  data_time: 0.0004  time: 0.0294
+2024/11/08 13:53:35 - mmengine - INFO - Epoch(train) [30][50/56]  base_lr: 2.0000e-03 lr: 8.9120e-04  eta: 0:06:26  time: 0.3441  data_time: 0.0111  memory: 5001  grad_norm: 236.8119  loss: 15.9110  loss_cls: 5.2976  loss_bbox: 5.2474  loss_dfl: 5.3660
+2024/11/08 13:53:37 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:53:37 - mmengine - INFO - Saving checkpoint at 30 epochs
+2024/11/08 13:53:40 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:53:40 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.494 | 0.728  | 0.488  | nan   | 0.37  | 0.771 |
+| pickup      | 0.101 | 0.15   | 0.106  | nan   | 0.062 | 0.4   |
+| truck       | 0.233 | 0.329  | 0.329  | nan   | 0.473 | 0.167 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:53:40 - mmengine - INFO - bbox_mAP_copypaste: 0.276 0.402 0.308 -1.000 0.302 0.446
+2024/11/08 13:53:40 - mmengine - INFO - Epoch(val) [30][28/28]    coco/camping car_precision: 0.4940  coco/pickup_precision: 0.1010  coco/truck_precision: 0.2330  coco/bbox_mAP: 0.2760  coco/bbox_mAP_50: 0.4020  coco/bbox_mAP_75: 0.3080  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.3020  coco/bbox_mAP_l: 0.4460  data_time: 0.0004  time: 0.0293
+2024/11/08 13:53:57 - mmengine - INFO - Epoch(train) [31][50/56]  base_lr: 2.0000e-03 lr: 8.5160e-04  eta: 0:06:07  time: 0.3412  data_time: 0.0106  memory: 4947  grad_norm: 193.7629  loss: 15.1589  loss_cls: 4.8618  loss_bbox: 5.1096  loss_dfl: 5.1875
+2024/11/08 13:53:59 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:54:00 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:54:00 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.458 | 0.788  | 0.393  | nan   | 0.396 | 0.628 |
+| pickup      | 0.121 | 0.161  | 0.148  | nan   | 0.089 | 0.685 |
+| truck       | 0.28  | 0.42   | 0.27   | nan   | 0.453 | 0.151 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:54:00 - mmengine - INFO - bbox_mAP_copypaste: 0.287 0.456 0.271 -1.000 0.312 0.488
+2024/11/08 13:54:00 - mmengine - INFO - Epoch(val) [31][28/28]    coco/camping car_precision: 0.4580  coco/pickup_precision: 0.1210  coco/truck_precision: 0.2800  coco/bbox_mAP: 0.2870  coco/bbox_mAP_50: 0.4560  coco/bbox_mAP_75: 0.2710  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.3120  coco/bbox_mAP_l: 0.4880  data_time: 0.0004  time: 0.0290
+2024/11/08 13:54:17 - mmengine - INFO - Epoch(train) [32][50/56]  base_lr: 2.0000e-03 lr: 8.1200e-04  eta: 0:05:48  time: 0.3428  data_time: 0.0104  memory: 5001  grad_norm: 205.2750  loss: 14.7685  loss_cls: 4.6151  loss_bbox: 4.9087  loss_dfl: 5.2446
+2024/11/08 13:54:19 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:54:20 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:54:20 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.499 | 0.733  | 0.546  | nan   | 0.473 | 0.703 |
+| pickup      | 0.251 | 0.337  | 0.284  | nan   | 0.16  | 0.718 |
+| truck       | 0.328 | 0.525  | 0.352  | nan   | 0.526 | 0.194 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:54:20 - mmengine - INFO - bbox_mAP_copypaste: 0.360 0.531 0.394 -1.000 0.386 0.538
+2024/11/08 13:54:20 - mmengine - INFO - Epoch(val) [32][28/28]    coco/camping car_precision: 0.4990  coco/pickup_precision: 0.2510  coco/truck_precision: 0.3280  coco/bbox_mAP: 0.3600  coco/bbox_mAP_50: 0.5310  coco/bbox_mAP_75: 0.3940  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.3860  coco/bbox_mAP_l: 0.5380  data_time: 0.0005  time: 0.0289
+2024/11/08 13:54:37 - mmengine - INFO - Epoch(train) [33][50/56]  base_lr: 2.0000e-03 lr: 7.7240e-04  eta: 0:05:28  time: 0.3438  data_time: 0.0107  memory: 5001  grad_norm: 211.1766  loss: 14.6976  loss_cls: 4.8051  loss_bbox: 4.8359  loss_dfl: 5.0566
+2024/11/08 13:54:39 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:54:40 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:54:40 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.488 | 0.742  | 0.49   | nan   | 0.4   | 0.709 |
+| pickup      | 0.124 | 0.18   | 0.14   | nan   | 0.062 | 0.533 |
+| truck       | 0.292 | 0.385  | 0.385  | nan   | 0.558 | 0.176 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:54:40 - mmengine - INFO - bbox_mAP_copypaste: 0.301 0.436 0.338 -1.000 0.340 0.473
+2024/11/08 13:54:40 - mmengine - INFO - Epoch(val) [33][28/28]    coco/camping car_precision: 0.4880  coco/pickup_precision: 0.1240  coco/truck_precision: 0.2920  coco/bbox_mAP: 0.3010  coco/bbox_mAP_50: 0.4360  coco/bbox_mAP_75: 0.3380  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.3400  coco/bbox_mAP_l: 0.4730  data_time: 0.0005  time: 0.0291
+2024/11/08 13:54:57 - mmengine - INFO - Epoch(train) [34][50/56]  base_lr: 2.0000e-03 lr: 7.3280e-04  eta: 0:05:09  time: 0.3429  data_time: 0.0105  memory: 4947  grad_norm: 169.1129  loss: 13.7427  loss_cls: 3.9627  loss_bbox: 4.7572  loss_dfl: 5.0229
+2024/11/08 13:54:59 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:55:00 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:55:00 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.591 | 0.84   | 0.609  | nan   | 0.42  | 0.895 |
+| pickup      | 0.187 | 0.247  | 0.209  | nan   | 0.119 | 0.85  |
+| truck       | 0.307 | 0.505  | 0.223  | nan   | 0.511 | 0.167 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:55:00 - mmengine - INFO - bbox_mAP_copypaste: 0.362 0.531 0.347 -1.000 0.350 0.638
+2024/11/08 13:55:00 - mmengine - INFO - Epoch(val) [34][28/28]    coco/camping car_precision: 0.5910  coco/pickup_precision: 0.1870  coco/truck_precision: 0.3070  coco/bbox_mAP: 0.3620  coco/bbox_mAP_50: 0.5310  coco/bbox_mAP_75: 0.3470  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.3500  coco/bbox_mAP_l: 0.6380  data_time: 0.0005  time: 0.0292
+2024/11/08 13:55:17 - mmengine - INFO - Epoch(train) [35][50/56]  base_lr: 2.0000e-03 lr: 6.9320e-04  eta: 0:04:50  time: 0.3441  data_time: 0.0109  memory: 4894  grad_norm: 201.4805  loss: 13.9378  loss_cls: 4.1817  loss_bbox: 4.7381  loss_dfl: 5.0180
+2024/11/08 13:55:19 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:55:19 - mmengine - INFO - Saving checkpoint at 35 epochs
+2024/11/08 13:55:22 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:55:22 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.516 | 0.746  | 0.608  | nan   | 0.532 | 0.748 |
+| pickup      | 0.236 | 0.318  | 0.292  | nan   | 0.103 | 0.801 |
+| truck       | 0.33  | 0.448  | 0.448  | nan   | 0.599 | 0.18  |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:55:22 - mmengine - INFO - bbox_mAP_copypaste: 0.361 0.504 0.449 -1.000 0.411 0.576
+2024/11/08 13:55:22 - mmengine - INFO - Epoch(val) [35][28/28]    coco/camping car_precision: 0.5160  coco/pickup_precision: 0.2360  coco/truck_precision: 0.3300  coco/bbox_mAP: 0.3610  coco/bbox_mAP_50: 0.5040  coco/bbox_mAP_75: 0.4490  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.4110  coco/bbox_mAP_l: 0.5760  data_time: 0.0004  time: 0.0293
+2024/11/08 13:55:36 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:55:39 - mmengine - INFO - Epoch(train) [36][50/56]  base_lr: 2.0000e-03 lr: 6.5360e-04  eta: 0:04:30  time: 0.3414  data_time: 0.0110  memory: 5001  grad_norm: 196.4344  loss: 13.5147  loss_cls: 4.0866  loss_bbox: 4.5872  loss_dfl: 4.8409
+2024/11/08 13:55:41 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:55:42 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:55:42 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.547 | 0.817  | 0.6    | nan   | 0.461 | 0.756 |
+| pickup      | 0.112 | 0.173  | 0.105  | nan   | 0.046 | 0.685 |
+| truck       | 0.351 | 0.452  | 0.452  | nan   | 0.638 | 0.151 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:55:42 - mmengine - INFO - bbox_mAP_copypaste: 0.337 0.481 0.386 -1.000 0.381 0.531
+2024/11/08 13:55:42 - mmengine - INFO - Epoch(val) [36][28/28]    coco/camping car_precision: 0.5470  coco/pickup_precision: 0.1120  coco/truck_precision: 0.3510  coco/bbox_mAP: 0.3370  coco/bbox_mAP_50: 0.4810  coco/bbox_mAP_75: 0.3860  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.3810  coco/bbox_mAP_l: 0.5310  data_time: 0.0004  time: 0.0290
+2024/11/08 13:55:59 - mmengine - INFO - Epoch(train) [37][50/56]  base_lr: 2.0000e-03 lr: 6.1400e-04  eta: 0:04:11  time: 0.3427  data_time: 0.0106  memory: 5001  grad_norm: 207.2895  loss: 14.0019  loss_cls: 4.1125  loss_bbox: 4.8354  loss_dfl: 5.0540
+2024/11/08 13:56:01 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:56:02 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:56:02 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.566 | 0.817  | 0.628  | nan   | 0.522 | 0.712 |
+| pickup      | 0.229 | 0.321  | 0.267  | nan   | 0.09  | 0.825 |
+| truck       | 0.424 | 0.505  | 0.505  | nan   | 0.691 | 0.229 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:56:02 - mmengine - INFO - bbox_mAP_copypaste: 0.406 0.548 0.467 -1.000 0.434 0.589
+2024/11/08 13:56:02 - mmengine - INFO - Epoch(val) [37][28/28]    coco/camping car_precision: 0.5660  coco/pickup_precision: 0.2290  coco/truck_precision: 0.4240  coco/bbox_mAP: 0.4060  coco/bbox_mAP_50: 0.5480  coco/bbox_mAP_75: 0.4670  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.4340  coco/bbox_mAP_l: 0.5890  data_time: 0.0005  time: 0.0290
+2024/11/08 13:56:20 - mmengine - INFO - Epoch(train) [38][50/56]  base_lr: 2.0000e-03 lr: 5.7440e-04  eta: 0:03:52  time: 0.3437  data_time: 0.0107  memory: 4947  grad_norm: 174.9557  loss: 12.7452  loss_cls: 3.6422  loss_bbox: 4.3449  loss_dfl: 4.7580
+2024/11/08 13:56:21 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:56:22 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:56:22 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.572 | 0.801  | 0.61   | nan   | 0.522 | 0.834 |
+| pickup      | 0.218 | 0.316  | 0.274  | nan   | 0.119 | 0.668 |
+| truck       | 0.342 | 0.42   | 0.42   | nan   | 0.634 | 0.206 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:56:22 - mmengine - INFO - bbox_mAP_copypaste: 0.377 0.513 0.434 -1.000 0.425 0.569
+2024/11/08 13:56:22 - mmengine - INFO - Epoch(val) [38][28/28]    coco/camping car_precision: 0.5720  coco/pickup_precision: 0.2180  coco/truck_precision: 0.3420  coco/bbox_mAP: 0.3770  coco/bbox_mAP_50: 0.5130  coco/bbox_mAP_75: 0.4340  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.4250  coco/bbox_mAP_l: 0.5690  data_time: 0.0005  time: 0.0293
+2024/11/08 13:56:40 - mmengine - INFO - Epoch(train) [39][50/56]  base_lr: 2.0000e-03 lr: 5.3480e-04  eta: 0:03:33  time: 0.3439  data_time: 0.0107  memory: 5001  grad_norm: 184.7073  loss: 12.9558  loss_cls: 3.6795  loss_bbox: 4.4820  loss_dfl: 4.7943
+2024/11/08 13:56:42 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:56:43 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:56:43 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.557 | 0.846  | 0.678  | nan   | 0.469 | 0.775 |
+| pickup      | 0.266 | 0.361  | 0.302  | nan   | 0.167 | 0.801 |
+| truck       | 0.392 | 0.457  | 0.457  | nan   | 0.705 | 0.196 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:56:43 - mmengine - INFO - bbox_mAP_copypaste: 0.405 0.555 0.479 -1.000 0.447 0.591
+2024/11/08 13:56:43 - mmengine - INFO - Epoch(val) [39][28/28]    coco/camping car_precision: 0.5570  coco/pickup_precision: 0.2660  coco/truck_precision: 0.3920  coco/bbox_mAP: 0.4050  coco/bbox_mAP_50: 0.5550  coco/bbox_mAP_75: 0.4790  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.4470  coco/bbox_mAP_l: 0.5910  data_time: 0.0004  time: 0.0293
+2024/11/08 13:57:00 - mmengine - INFO - Epoch(train) [40][50/56]  base_lr: 2.0000e-03 lr: 4.9520e-04  eta: 0:03:13  time: 0.3436  data_time: 0.0107  memory: 5001  grad_norm: 167.9322  loss: 12.3723  loss_cls: 3.3502  loss_bbox: 4.2589  loss_dfl: 4.7633
+2024/11/08 13:57:02 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:57:02 - mmengine - INFO - Saving checkpoint at 40 epochs
+2024/11/08 13:57:05 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:57:05 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.626 | 0.868  | 0.746  | nan   | 0.528 | 0.836 |
+| pickup      | 0.246 | 0.338  | 0.288  | nan   | 0.175 | 0.685 |
+| truck       | 0.423 | 0.496  | 0.496  | nan   | 0.666 | 0.219 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:57:05 - mmengine - INFO - bbox_mAP_copypaste: 0.431 0.567 0.510 -1.000 0.456 0.580
+2024/11/08 13:57:05 - mmengine - INFO - Epoch(val) [40][28/28]    coco/camping car_precision: 0.6260  coco/pickup_precision: 0.2460  coco/truck_precision: 0.4230  coco/bbox_mAP: 0.4310  coco/bbox_mAP_50: 0.5670  coco/bbox_mAP_75: 0.5100  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.4560  coco/bbox_mAP_l: 0.5800  data_time: 0.0005  time: 0.0292
+2024/11/08 13:57:22 - mmengine - INFO - Epoch(train) [41][50/56]  base_lr: 2.0000e-03 lr: 4.5560e-04  eta: 0:02:54  time: 0.3412  data_time: 0.0107  memory: 5001  grad_norm: 178.5679  loss: 12.2072  loss_cls: 3.3192  loss_bbox: 4.1748  loss_dfl: 4.7133
+2024/11/08 13:57:24 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:57:25 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:57:25 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.598 | 0.869  | 0.592  | nan   | 0.528 | 0.77  |
+| pickup      | 0.304 | 0.414  | 0.353  | nan   | 0.177 | 0.85  |
+| truck       | 0.369 | 0.475  | 0.39   | nan   | 0.592 | 0.184 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:57:25 - mmengine - INFO - bbox_mAP_copypaste: 0.424 0.586 0.445 -1.000 0.432 0.602
+2024/11/08 13:57:25 - mmengine - INFO - Epoch(val) [41][28/28]    coco/camping car_precision: 0.5980  coco/pickup_precision: 0.3040  coco/truck_precision: 0.3690  coco/bbox_mAP: 0.4240  coco/bbox_mAP_50: 0.5860  coco/bbox_mAP_75: 0.4450  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.4320  coco/bbox_mAP_l: 0.6020  data_time: 0.0005  time: 0.0292
+2024/11/08 13:57:42 - mmengine - INFO - Epoch(train) [42][50/56]  base_lr: 2.0000e-03 lr: 4.1600e-04  eta: 0:02:35  time: 0.3428  data_time: 0.0105  memory: 5001  grad_norm: 171.1130  loss: 12.5390  loss_cls: 3.2156  loss_bbox: 4.4788  loss_dfl: 4.8447
+2024/11/08 13:57:44 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:57:45 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:57:45 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.612 | 0.924  | 0.595  | nan   | 0.585 | 0.781 |
+| pickup      | 0.241 | 0.351  | 0.292  | nan   | 0.125 | 0.685 |
+| truck       | 0.44  | 0.542  | 0.542  | nan   | 0.748 | 0.198 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:57:45 - mmengine - INFO - bbox_mAP_copypaste: 0.431 0.606 0.476 -1.000 0.486 0.555
+2024/11/08 13:57:45 - mmengine - INFO - Epoch(val) [42][28/28]    coco/camping car_precision: 0.6120  coco/pickup_precision: 0.2410  coco/truck_precision: 0.4400  coco/bbox_mAP: 0.4310  coco/bbox_mAP_50: 0.6060  coco/bbox_mAP_75: 0.4760  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.4860  coco/bbox_mAP_l: 0.5550  data_time: 0.0004  time: 0.0291
+2024/11/08 13:58:02 - mmengine - INFO - Epoch(train) [43][50/56]  base_lr: 2.0000e-03 lr: 3.7640e-04  eta: 0:02:16  time: 0.3441  data_time: 0.0111  memory: 5001  grad_norm: 172.0505  loss: 12.0464  loss_cls: 3.0896  loss_bbox: 4.2551  loss_dfl: 4.7017
+2024/11/08 13:58:04 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:58:05 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:58:05 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.571 | 0.855  | 0.525  | nan   | 0.482 | 0.76  |
+| pickup      | 0.253 | 0.334  | 0.285  | nan   | 0.134 | 0.769 |
+| truck       | 0.469 | 0.549  | 0.549  | nan   | 0.741 | 0.263 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:58:05 - mmengine - INFO - bbox_mAP_copypaste: 0.431 0.579 0.453 -1.000 0.453 0.597
+2024/11/08 13:58:05 - mmengine - INFO - Epoch(val) [43][28/28]    coco/camping car_precision: 0.5710  coco/pickup_precision: 0.2530  coco/truck_precision: 0.4690  coco/bbox_mAP: 0.4310  coco/bbox_mAP_50: 0.5790  coco/bbox_mAP_75: 0.4530  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.4530  coco/bbox_mAP_l: 0.5970  data_time: 0.0004  time: 0.0290
+2024/11/08 13:58:22 - mmengine - INFO - Epoch(train) [44][50/56]  base_lr: 2.0000e-03 lr: 3.3680e-04  eta: 0:01:57  time: 0.3442  data_time: 0.0106  memory: 5001  grad_norm: 166.0861  loss: 12.2722  loss_cls: 3.0114  loss_bbox: 4.4173  loss_dfl: 4.8435
+2024/11/08 13:58:24 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:58:25 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:58:25 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.574 | 0.874  | 0.448  | nan   | 0.523 | 0.757 |
+| pickup      | 0.231 | 0.312  | 0.265  | nan   | 0.131 | 0.718 |
+| truck       | 0.416 | 0.497  | 0.497  | nan   | 0.739 | 0.168 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:58:25 - mmengine - INFO - bbox_mAP_copypaste: 0.407 0.561 0.403 -1.000 0.464 0.548
+2024/11/08 13:58:25 - mmengine - INFO - Epoch(val) [44][28/28]    coco/camping car_precision: 0.5740  coco/pickup_precision: 0.2310  coco/truck_precision: 0.4160  coco/bbox_mAP: 0.4070  coco/bbox_mAP_50: 0.5610  coco/bbox_mAP_75: 0.4030  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.4640  coco/bbox_mAP_l: 0.5480  data_time: 0.0005  time: 0.0291
+2024/11/08 13:58:43 - mmengine - INFO - Epoch(train) [45][50/56]  base_lr: 2.0000e-03 lr: 2.9720e-04  eta: 0:01:37  time: 0.3434  data_time: 0.0112  memory: 4894  grad_norm: 161.4688  loss: 11.7385  loss_cls: 2.9148  loss_bbox: 4.1494  loss_dfl: 4.6743
+2024/11/08 13:58:44 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:58:45 - mmengine - INFO - Saving checkpoint at 45 epochs
+2024/11/08 13:58:48 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:58:48 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.627 | 0.903  | 0.541  | nan   | 0.588 | 0.771 |
+| pickup      | 0.303 | 0.422  | 0.389  | nan   | 0.19  | 0.801 |
+| truck       | 0.419 | 0.519  | 0.519  | nan   | 0.712 | 0.182 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:58:48 - mmengine - INFO - bbox_mAP_copypaste: 0.450 0.615 0.483 -1.000 0.497 0.585
+2024/11/08 13:58:48 - mmengine - INFO - Epoch(val) [45][28/28]    coco/camping car_precision: 0.6270  coco/pickup_precision: 0.3030  coco/truck_precision: 0.4190  coco/bbox_mAP: 0.4500  coco/bbox_mAP_50: 0.6150  coco/bbox_mAP_75: 0.4830  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.4970  coco/bbox_mAP_l: 0.5850  data_time: 0.0005  time: 0.0292
+2024/11/08 13:59:05 - mmengine - INFO - Epoch(train) [46][50/56]  base_lr: 2.0000e-03 lr: 2.5760e-04  eta: 0:01:18  time: 0.3415  data_time: 0.0106  memory: 4834  grad_norm: 163.4659  loss: 11.6243  loss_cls: 2.9856  loss_bbox: 4.0500  loss_dfl: 4.5887
+2024/11/08 13:59:07 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:59:08 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:59:08 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.569 | 0.865  | 0.572  | nan   | 0.53  | 0.688 |
+| pickup      | 0.301 | 0.445  | 0.368  | nan   | 0.178 | 0.801 |
+| truck       | 0.435 | 0.524  | 0.524  | nan   | 0.718 | 0.222 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:59:08 - mmengine - INFO - bbox_mAP_copypaste: 0.435 0.612 0.488 -1.000 0.475 0.571
+2024/11/08 13:59:08 - mmengine - INFO - Epoch(val) [46][28/28]    coco/camping car_precision: 0.5690  coco/pickup_precision: 0.3010  coco/truck_precision: 0.4350  coco/bbox_mAP: 0.4350  coco/bbox_mAP_50: 0.6120  coco/bbox_mAP_75: 0.4880  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.4750  coco/bbox_mAP_l: 0.5710  data_time: 0.0005  time: 0.0288
+2024/11/08 13:59:25 - mmengine - INFO - Epoch(train) [47][50/56]  base_lr: 2.0000e-03 lr: 2.1800e-04  eta: 0:00:59  time: 0.3429  data_time: 0.0105  memory: 5001  grad_norm: 176.4200  loss: 11.8277  loss_cls: 2.9346  loss_bbox: 4.1751  loss_dfl: 4.7179
+2024/11/08 13:59:27 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:59:28 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:59:28 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.552 | 0.839  | 0.549  | nan   | 0.517 | 0.667 |
+| pickup      | 0.283 | 0.397  | 0.362  | nan   | 0.152 | 0.801 |
+| truck       | 0.425 | 0.504  | 0.504  | nan   | 0.748 | 0.182 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:59:28 - mmengine - INFO - bbox_mAP_copypaste: 0.420 0.580 0.472 -1.000 0.472 0.550
+2024/11/08 13:59:28 - mmengine - INFO - Epoch(val) [47][28/28]    coco/camping car_precision: 0.5520  coco/pickup_precision: 0.2830  coco/truck_precision: 0.4250  coco/bbox_mAP: 0.4200  coco/bbox_mAP_50: 0.5800  coco/bbox_mAP_75: 0.4720  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.4720  coco/bbox_mAP_l: 0.5500  data_time: 0.0004  time: 0.0292
+2024/11/08 13:59:45 - mmengine - INFO - Epoch(train) [48][50/56]  base_lr: 2.0000e-03 lr: 1.7840e-04  eta: 0:00:40  time: 0.3446  data_time: 0.0107  memory: 5001  grad_norm: 162.9085  loss: 11.5799  loss_cls: 2.6822  loss_bbox: 4.2159  loss_dfl: 4.6818
+2024/11/08 13:59:47 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 13:59:48 - mmengine - INFO - Evaluating bbox...
+2024/11/08 13:59:48 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.608 | 0.888  | 0.579  | nan   | 0.511 | 0.801 |
+| pickup      | 0.286 | 0.422  | 0.349  | nan   | 0.165 | 0.801 |
+| truck       | 0.438 | 0.515  | 0.515  | nan   | 0.725 | 0.207 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 13:59:48 - mmengine - INFO - bbox_mAP_copypaste: 0.444 0.608 0.481 -1.000 0.467 0.603
+2024/11/08 13:59:48 - mmengine - INFO - Epoch(val) [48][28/28]    coco/camping car_precision: 0.6080  coco/pickup_precision: 0.2860  coco/truck_precision: 0.4380  coco/bbox_mAP: 0.4440  coco/bbox_mAP_50: 0.6080  coco/bbox_mAP_75: 0.4810  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.4670  coco/bbox_mAP_l: 0.6030  data_time: 0.0005  time: 0.0292
+2024/11/08 14:00:05 - mmengine - INFO - Epoch(train) [49][50/56]  base_lr: 2.0000e-03 lr: 1.3880e-04  eta: 0:00:21  time: 0.3440  data_time: 0.0110  memory: 4834  grad_norm: 162.9694  loss: 10.9217  loss_cls: 2.6181  loss_bbox: 3.7866  loss_dfl: 4.5171
+2024/11/08 14:00:07 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 14:00:08 - mmengine - INFO - Evaluating bbox...
+2024/11/08 14:00:08 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.614 | 0.882  | 0.769  | nan   | 0.565 | 0.775 |
+| pickup      | 0.266 | 0.389  | 0.32   | nan   | 0.153 | 0.85  |
+| truck       | 0.445 | 0.506  | 0.506  | nan   | 0.772 | 0.185 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 14:00:08 - mmengine - INFO - bbox_mAP_copypaste: 0.442 0.592 0.532 -1.000 0.497 0.604
+2024/11/08 14:00:08 - mmengine - INFO - Epoch(val) [49][28/28]    coco/camping car_precision: 0.6140  coco/pickup_precision: 0.2660  coco/truck_precision: 0.4450  coco/bbox_mAP: 0.4420  coco/bbox_mAP_50: 0.5920  coco/bbox_mAP_75: 0.5320  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.4970  coco/bbox_mAP_l: 0.6040  data_time: 0.0004  time: 0.0294
+2024/11/08 14:00:25 - mmengine - INFO - Epoch(train) [50][50/56]  base_lr: 2.0000e-03 lr: 9.9200e-05  eta: 0:00:02  time: 0.3469  data_time: 0.0113  memory: 5001  grad_norm: 169.2860  loss: 10.9078  loss_cls: 2.6969  loss_bbox: 3.8063  loss_dfl: 4.4047
+2024/11/08 14:00:27 - mmengine - INFO - Exp name: mlcv_yolo_world_training_config_20241108_134315
+2024/11/08 14:00:28 - mmengine - INFO - Saving checkpoint at 50 epochs
+2024/11/08 14:00:31 - mmengine - INFO - Evaluating bbox...
+2024/11/08 14:00:31 - mmengine - INFO - 
++-------------+-------+--------+--------+-------+-------+-------+
+| category    | mAP   | mAP_50 | mAP_75 | mAP_s | mAP_m | mAP_l |
++-------------+-------+--------+--------+-------+-------+-------+
+| camping car | 0.618 | 0.904  | 0.767  | nan   | 0.567 | 0.775 |
+| pickup      | 0.298 | 0.419  | 0.363  | nan   | 0.195 | 0.85  |
+| truck       | 0.436 | 0.52   | 0.52   | nan   | 0.744 | 0.182 |
++-------------+-------+--------+--------+-------+-------+-------+
+2024/11/08 14:00:31 - mmengine - INFO - bbox_mAP_copypaste: 0.451 0.615 0.550 -1.000 0.502 0.603
+2024/11/08 14:00:31 - mmengine - INFO - Epoch(val) [50][28/28]    coco/camping car_precision: 0.6180  coco/pickup_precision: 0.2980  coco/truck_precision: 0.4360  coco/bbox_mAP: 0.4510  coco/bbox_mAP_50: 0.6150  coco/bbox_mAP_75: 0.5500  coco/bbox_mAP_s: -1.0000  coco/bbox_mAP_m: 0.5020  coco/bbox_mAP_l: 0.6030  data_time: 0.0005  time: 0.0295
+2024/11/08 15:04:53 - mmengine - WARNING - Failed to search registry with scope "mmyolo" in the "log_processor" registry tree. As a workaround, the current "log_processor" registry in "mmengine" is used to build instance. This may cause unexpected failure when running the built modules. Please check whether "mmyolo" is a correct scope, or whether the registry is initialized.
